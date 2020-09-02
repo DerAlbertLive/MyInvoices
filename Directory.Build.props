@@ -1,17 +1,19 @@
 <Project>
-    <PropertyGroup>
-        <LangVersion>latest</LangVersion>
-        <DefaultItemExcludes>*.ncrunchproject;*.DotSettings</DefaultItemExcludes>
-        <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <DefaultItemExcludes>*.ncrunchproject;*.DotSettings</DefaultItemExcludes>
+    <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
+    <IsPackable>false</IsPackable>
 
-    <PropertyGroup Condition="'$(NCrunch)' == '1'">
-        <DisableGitVersionTask>true</DisableGitVersionTask>
-    </PropertyGroup>
-    
-    
-    <ItemGroup>
-        <PackageReference Include="GitVersionTask" Version="5.3.7" PrivateAssets="All"/>
-    </ItemGroup>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(NCrunch)' == '1'">
+    <DisableGitVersionTask>true</DisableGitVersionTask>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="GitVersionTask" Version="5.3.7" PrivateAssets="All"/>
+  </ItemGroup>
 </Project>

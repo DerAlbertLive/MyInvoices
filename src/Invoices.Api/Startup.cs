@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,8 +16,11 @@ namespace Invoices.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        readonly IWebHostEnvironment _environment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
+            _environment = environment;
             Configuration = configuration;
         }
 
@@ -26,6 +30,11 @@ namespace Invoices.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            if (_environment.IsDevelopment())
+            {
+                services.AddOptions<ForwardedHeadersOptions>()
+                    .Configure(o => o.ForwardedHeaders = ForwardedHeaders.All);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +43,7 @@ namespace Invoices.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseForwardedHeaders();
             }
 
             app.UseHttpsRedirection();

@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace Invoices.Api.Tests
@@ -6,9 +7,10 @@ namespace Invoices.Api.Tests
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public void Nothing()
         {
-
+            true.Should().BeTrue();
         }
     }
 }
+

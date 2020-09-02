@@ -4,6 +4,10 @@ namespace Invoices.Api
 {
     public class WeatherForecast
     {
+        public WeatherForecast()
+        {
+            Summary = string.Empty;
+        }
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

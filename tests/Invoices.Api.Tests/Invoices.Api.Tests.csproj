@@ -10,4 +10,9 @@
     <ProjectReference Include="..\..\src\Invoices.Api\Invoices.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+  </ItemGroup>
+
 </Project>
