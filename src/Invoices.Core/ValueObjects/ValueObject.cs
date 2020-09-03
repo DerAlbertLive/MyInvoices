@@ -9,25 +9,16 @@ namespace Invoices.Core.ValueObjects
     /// <summary>
     ///  Based Class for all Value Objects
     /// </summary>
-
-    public abstract class ValueObject
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
         protected abstract IEnumerable<object> GetEqualityComponents();
 
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            if (obj == null)
-                return false;
-
-            if (GetType() != obj.GetType())
-                return false;
-
-            if (obj is ValueObject valueObject)
-            {
-                return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
-            }
-
-            throw new InvalidOperationException("Your are not allowed to compare none ValueObjects");
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            if (other.GetType() != GetType()) return false;
+            return Equals((ValueObject) other);
         }
 
         public override int GetHashCode()
@@ -50,6 +41,18 @@ namespace Invoices.Core.ValueObjects
         public static bool operator !=(ValueObject a, ValueObject b)
         {
             return !(a == b);
+        }
+
+        public bool Equals(ValueObject? other)
+        {
+            if (other == null)
+                return false;
+
+            if (GetType() != other.GetType())
+                return false;
+
+
+            return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
         }
     }
 }

@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace Invoices.Core.ValueObjects
 {
-    public class EMail : ValueObject
+    public class ShortDescription : ValueObject
     {
         public string Value { get; }
 
-        public EMail(string value)
+        public ShortDescription(string value)
         {
             Value = value;
         }
@@ -16,7 +16,7 @@ namespace Invoices.Core.ValueObjects
             yield return Value;
         }
 
-        public static EMail Empty() => _empty;
-        static EMail _empty => new EMail(string.Empty);
+        public static ShortDescription Empty() => _empty;
+        static ShortDescription _empty = new ShortDescription(string.Empty);
     }
 }

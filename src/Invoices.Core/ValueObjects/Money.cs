@@ -12,10 +12,15 @@ namespace Invoices.Core.ValueObjects
             Currency = currency.ToUpperInvariant();
             Amount = amount;
         }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Currency;
             yield return Amount;
         }
+
+        public static Money Empty() => _empty;
+
+        static Money _empty = new Money(string.Empty, 0.0m);
     }
 }

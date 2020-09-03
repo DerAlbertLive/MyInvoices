@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace Invoices.Core.ValueObjects
 {
-    public class EMail : ValueObject
+    public class Percent : ValueObject
     {
-        public string Value { get; }
+        public decimal Value { get; }
 
-        public EMail(string value)
+        public Percent(decimal value)
         {
             Value = value;
         }
@@ -16,7 +16,8 @@ namespace Invoices.Core.ValueObjects
             yield return Value;
         }
 
-        public static EMail Empty() => _empty;
-        static EMail _empty => new EMail(string.Empty);
+        public static Percent Empty() => _empty;
+
+        static Percent _empty = new Percent(0.0m);
     }
 }

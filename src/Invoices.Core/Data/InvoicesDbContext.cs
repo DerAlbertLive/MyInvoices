@@ -16,11 +16,24 @@ namespace Invoices.Core.Data
             Users = Set<User>();
             Vats = Set<Vat>();
             Customers = Set<Customer>();
+            Products = Set<Product>();
+            ProductTypes = Set<ProductType>();
+            ProductPrices = Set<ProductPrice>();
+            Units = Set<UnitOfQuantity>();
+            Projects = Set<Project>();
+            ProjectPrices = Set<ProjectPrice>();
         }
 
+        public DbSet<UnitOfQuantity> Units { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductPrice> ProductPrices { get; set; }
+
+        public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Vat> Vats { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectPrice> ProjectPrices { get; }
 
         /// <summary>
         /// Synchronous SaveChanges is not allowed for this application, go all async

@@ -12,14 +12,14 @@ namespace Invoices.Core.ValueObjects
             Name1 = name1;
             Name2 = name2;
         }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Name1;
+            yield return Name2;
         }
 
-        public static CompanyName Empty()
-        {
-            return new CompanyName(string.Empty, string.Empty);
-        }
+        public static CompanyName Empty() => _empty;
+        static CompanyName _empty = new CompanyName(string.Empty, string.Empty);
     }
 }

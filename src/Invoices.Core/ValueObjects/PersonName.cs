@@ -15,16 +15,14 @@ namespace Invoices.Core.ValueObjects
             Family = family;
         }
 
-        public static PersonName Empty()
-        {
-            return new PersonName(string.Empty, string.Empty, string.Empty);
-        }
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Given;
             yield return Middle;
             yield return Family;
         }
+
+        public static PersonName Empty() => _empty;
+        static PersonName _empty = new PersonName(string.Empty, string.Empty, string.Empty);
     }
 }

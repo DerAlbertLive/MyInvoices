@@ -1,11 +1,19 @@
+using Invoices.Core.ValueObjects;
+
 namespace Invoices.Core.Entities
 {
     public class ProductType : Entity
     {
-        public ProductType()
+        protected ProductType()
         {
-            Description = string.Empty;
+            Description = ShortDescription.Empty();
         }
-        public string Description { get; set; }
+
+        public ProductType(ShortDescription description)
+        {
+            Description = description;
+        }
+
+        public ShortDescription Description { get; set; }
     }
 }

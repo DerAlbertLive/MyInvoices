@@ -22,9 +22,7 @@ namespace Invoices.Core.ValueObjects
             yield return ZipCode;
         }
 
-        public static Address Empty()
-        {
-            return new Address(string.Empty, string.Empty, string.Empty);
-        }
+        public static Address Empty() => _empty;
+        static Address _empty = new Address(string.Empty, string.Empty, string.Empty);
     }
 }

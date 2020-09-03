@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Invoices.Core.Entities;
+using Invoices.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using Xunit;
@@ -24,16 +25,13 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat()
-            {
-                Description = "CreatedVat"
-            };
+            var vat = new Vat(new Percent(16.0m), new ShortDescription("CreatedVat"));
 
             dbContext.Vats.Add(vat);
 
             await dbContext.SaveChangesAsync();
 
-            var result = await dbContext.Vats.SingleAsync(v => v.Description == "CreatedVat");
+            var result = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
 
             result.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, precision: 1000);
             result.ChangedAt.Should().Be(result.CreatedAt);
@@ -44,16 +42,13 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat()
-            {
-                Description = "CreatedVat"
-            };
+            var vat = new Vat(new Percent(16.0m),  new ShortDescription("CreatedVat"));
 
             dbContext.Vats.Add(vat);
 
             await dbContext.SaveChangesAsync();
 
-            var result = await dbContext.Vats.SingleAsync(v => v.Description == "CreatedVat");
+            var result = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
 
             result.CreatedById.Should().Be(1);
             result.ChangedById.Should().Be(1);
@@ -64,20 +59,19 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat()
-            {
-                Description = "CreatedAt"
-            };
+            var vat = new Vat(new Percent(16.0m), new ShortDescription("CreatedAt"));
 
             dbContext.Vats.Add(vat);
 
             await dbContext.SaveChangesAsync();
 
-            vat.Description = "ChangedAt";
+            await Task.Delay(200);
 
-            await dbContext.SaveChangesAsync();
+            vat.ChangeDescription(new ShortDescription("ChangedAt"));
 
-            var result = await dbContext.Vats.SingleAsync(v => v.Description == "ChangedAt");
+            var count = await dbContext.SaveChangesAsync();
+
+            var result = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
 
             result.ChangedAt.Should().NotBe(result.CreatedAt);
 
@@ -89,22 +83,19 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat()
-            {
-                Description = "CreatedAt"
-            };
+            var vat = new Vat(new Percent(16.0m), new ShortDescription("CreatedAt"));
 
             dbContext.Vats.Add(vat);
 
             await dbContext.SaveChangesAsync();
 
-            vat.Description = "ChangedAt";
+            vat.ChangeDescription(new ShortDescription("ChangedAt"));
 
             UserIdAccessor.UserId.Returns(2);
 
             await dbContext.SaveChangesAsync();
 
-            var result = await dbContext.Vats.SingleAsync(v => v.Description == "ChangedAt");
+            var result = await dbContext.Vats.SingleAsync(v => v.Description.Value == "ChangedAt");
 
             result.CreatedById.Should().Be(1);
             result.ChangedById.Should().Be(2);

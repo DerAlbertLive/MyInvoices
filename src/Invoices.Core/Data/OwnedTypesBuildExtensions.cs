@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
-using Invoices.Core.Entities;
 using Invoices.Core.ValueObjects;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,8 +9,14 @@ namespace Invoices.Core.Data
 {
     public static class OwnedTypesBuildExtensions
     {
-        public static void OwnsOnePersonName<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, PersonName>> navigationExpression, string prefix="Name") where T : class
+        public static void OwnsOnePersonName<T>(this EntityTypeBuilder<T> builder,
+            Expression<Func<T, PersonName>> navigationExpression, string? prefix = null) where T : class
         {
+            if (prefix == null)
+            {
+                prefix = GetNavigationName(navigationExpression);
+            }
+
             builder.OwnsOne(navigationExpression, p =>
             {
                 p.Property(pp => pp.Given)
@@ -28,8 +34,16 @@ namespace Invoices.Core.Data
             });
         }
 
-        public static void OwnsOneCompanyName<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, CompanyName>> navigationExpression, string prefix="Company") where T : class
+        public static void OwnsOneCompanyName<T>(
+            this EntityTypeBuilder<T> builder,
+            Expression<Func<T, CompanyName>> navigationExpression,
+            string? prefix = null) where T : class
         {
+            if (prefix == null)
+            {
+                prefix = GetNavigationName(navigationExpression);
+            }
+
             builder.OwnsOne(navigationExpression, p =>
             {
                 p.Property(pp => pp.Name1)
@@ -43,8 +57,16 @@ namespace Invoices.Core.Data
             });
         }
 
-        public static void OwnsOneAddress<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, Address>> navigationExpression, string prefix) where T : class
+        public static void OwnsOneAddress<T>(
+            this EntityTypeBuilder<T> builder,
+            Expression<Func<T, Address>> navigationExpression,
+            string? prefix = null) where T : class
         {
+            if (prefix == null)
+            {
+                prefix = GetNavigationName(navigationExpression);
+            }
+
             builder.OwnsOne(navigationExpression, p =>
             {
                 p.Property(pp => pp.Street)
@@ -60,6 +82,94 @@ namespace Invoices.Core.Data
                     .HasMaxLength(8)
                     .HasColumnName($"{prefix}_{nameof(Address.ZipCode)}");
             });
+        }
+
+        public static void OwnsOneMoney<T>(
+            this EntityTypeBuilder<T> builder,
+            Expression<Func<T, Money>> navigationExpression,
+            string? prefix = null) where T : class
+        {
+            if (prefix == null)
+            {
+                prefix = GetNavigationName(navigationExpression);
+            }
+
+            builder.OwnsOne(navigationExpression, p =>
+            {
+                p.Property(pp => pp.Amount)
+                    .IsRequired()
+                    .HasColumnName($"{prefix}_{nameof(Money.Amount)}");
+                p.Property(pp => pp.Currency)
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasColumnName($"{prefix}_{nameof(Money.Currency)}");
+            });
+        }
+
+        public static void OwnsOneEMail<T>(
+            this EntityTypeBuilder<T> builder,
+            Expression<Func<T, EMail>> navigationExpression,
+            string? columnName = null) where T : class
+        {
+            if (columnName == null)
+            {
+                columnName = GetNavigationName(navigationExpression);
+            }
+
+            builder.OwnsOne(navigationExpression, b =>
+            {
+                b.Property(p => p.Value)
+                    .IsRequired()
+                    .HasMaxLength(128)
+                    .HasColumnName($"{columnName}");
+            });
+        }
+
+        public static void OwnsOneShortDescription<T>(
+            this EntityTypeBuilder<T> builder,
+            Expression<Func<T, ShortDescription>> navigationExpression,
+            string? columnName = null) where T : class
+        {
+            if (columnName == null)
+            {
+                columnName = GetNavigationName(navigationExpression);
+            }
+
+            builder.OwnsOne(navigationExpression, b =>
+            {
+                b.Property(pp => pp.Value)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName($"{columnName}");
+            });
+        }
+
+        public static void OwnsOnePercent<T>(
+            this EntityTypeBuilder<T> builder,
+            Expression<Func<T, Percent>> navigationExpression,
+            string? columnName = null) where T : class
+        {
+            if (columnName == null)
+            {
+                columnName = GetNavigationName(navigationExpression);
+            }
+
+            builder.OwnsOne(navigationExpression, b =>
+            {
+                b.Property(pp => pp.Value)
+                    .IsRequired()
+                    .HasColumnName($"{columnName}");
+            });
+        }
+
+        static string GetNavigationName<T, T2>([NotNull] Expression<Func<T, T2>> expression) where T : class
+        {
+            if (expression.Body is MemberExpression member)
+            {
+                return member.Member.Name;
+            }
+
+            throw new ArgumentException("Action must be a member expression.");
         }
     }
 }

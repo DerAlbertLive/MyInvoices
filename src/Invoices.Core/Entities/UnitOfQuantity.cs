@@ -1,16 +1,26 @@
+using Invoices.Core.ValueObjects;
+
 namespace Invoices.Core.Entities
 {
     public class UnitOfQuantity : Entity
     {
-        public UnitOfQuantity()
+        protected UnitOfQuantity()
         {
+            Description = ShortDescription.Empty();
             IsoCode = string.Empty;
             Short = string.Empty;
-            Description = string.Empty;
         }
+
+        public UnitOfQuantity(string isoCode, string @short, ShortDescription description) : this()
+        {
+            IsoCode = isoCode;
+            Short = @short;
+            Description = description;
+        }
+
         public string IsoCode { get; set; }
         public string Short { get; set; }
 
-        public string Description { get; set; }
+        public ShortDescription Description { get; set; }
     }
 }

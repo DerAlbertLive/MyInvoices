@@ -43,20 +43,14 @@ namespace Invoices.Core.Tests.Repositories
         {
             var users = new[]
             {
-                new User(new PersonName("Albert", string.Empty, "Weinert"), EMail.Empty())
-                {
-                    Id = 1
-                },
-                new User(new PersonName("Awimba", string.Empty, "Weh"), EMail.Empty())
-                {
-                    Id = 2,
-                }
-            };
+                new User(new PersonName("Albert", string.Empty, "Weinert"), EMail.Empty()),
+                new User(new PersonName("Awimba", string.Empty, "Weh"), EMail.Empty())            };
 
             dbContext.Users.AddRange(users);
             dbContext.SaveChangesAsync().GetAwaiter().GetResult();
 
-            UserIdAccessor.UserId.Returns(1);
+            UserIdAccessor.UserId.Returns(users[0].Id);
+
         }
 
         public void Dispose()

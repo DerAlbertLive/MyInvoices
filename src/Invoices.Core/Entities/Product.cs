@@ -1,13 +1,26 @@
+using System;
+using Invoices.Core.ValueObjects;
+using JetBrains.Annotations;
+
 namespace Invoices.Core.Entities
 {
     public class Product : Entity
     {
-        public Product()
+        protected Product()
         {
-            Description = string.Empty;
+            Description = ShortDescription.Empty();
         }
 
-        public string Description { get; set; }
+        public Product([NotNull] ShortDescription description, long unitOfQuantityId, long productTypeId,
+            bool inactive) : this()
+        {
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            UnitOfQuantityId = unitOfQuantityId;
+            ProductTypeId = productTypeId;
+            Inactive = inactive;
+        }
+
+        public ShortDescription Description { get; set; }
         public long UnitOfQuantityId { get; set; }
         public long ProductTypeId { get; set; }
 

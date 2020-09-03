@@ -6,21 +6,20 @@ namespace Invoices.Core.Entities
     {
         protected Customer()
         {
-            CompanyName = CompanyName.Empty();
-            Name = PersonName.Empty();
+            Name = CompanyName.Empty();
+            ContactName = PersonName.Empty();
             MainAddress = Address.Empty();
         }
 
-        public Customer(CompanyName companyName, PersonName name):this()
+        public Customer(CompanyName name, PersonName contactName) : this()
         {
-            CompanyName = companyName;
             Name = name;
+            ContactName = contactName;
         }
 
-        public CompanyName CompanyName { get; }
-        public PersonName Name { get; set; }
+        public CompanyName Name { get; }
+        public PersonName ContactName { get; set; }
 
         public Address MainAddress { get; set; }
-
     }
 }

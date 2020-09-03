@@ -3,7 +3,7 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public  class User : IEntityChangedAt
+    public class User : IEntityChangedAt
     {
         public PersonName Name { get; }
 
@@ -13,16 +13,16 @@ namespace Invoices.Core.Entities
             EMail = EMail.Empty();
         }
 
-        public User(PersonName name, EMail eMail):this()
+        public User(PersonName name, EMail eMail) : this()
         {
             Name = name;
             EMail = eMail;
         }
 
-        public long Id { get; set; }
+        public long Id { get; }
         public DateTime CreatedAt { get; set; }
         public DateTime ChangedAt { get; set; }
-        public EMail EMail { get;  }
+        public EMail EMail { get; }
 
         public bool Locked { get; set; }
     }
