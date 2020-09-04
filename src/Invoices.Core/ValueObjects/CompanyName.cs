@@ -19,7 +19,6 @@ namespace Invoices.Core.ValueObjects
             yield return Name2;
         }
 
-        public static CompanyName Empty() => _empty;
-        static CompanyName _empty = new CompanyName(string.Empty, string.Empty);
+        public static CompanyName Empty => new CompanyName(string.Empty, string.Empty);
     }
 }

@@ -16,8 +16,7 @@ namespace Invoices.Core.ValueObjects
             yield return Value;
         }
 
-        public static Percent Empty() => _empty;
+        public static Percent None => new Percent(0.0m);
 
-        static Percent _empty = new Percent(0.0m);
     }
 }

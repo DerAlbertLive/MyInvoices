@@ -43,7 +43,7 @@ namespace Invoices.Core.Data
                 entity.CreatedById = currentUserIdAccessor.UserId;
                 entity.ChangedById = entity.CreatedById;
             }
-            else if (entity.ChangedById != UserId.Zero)
+            else if (entity.ChangedById != UserId.None)
             {
                 entity.ChangedById = currentUserIdAccessor.UserId;
             }
@@ -51,7 +51,6 @@ namespace Invoices.Core.Data
 
         static void UpdateChangeTime(IEntityChangedAt entity, EntityEntry entityEntry)
         {
-            if (entityEntry.IsKeySet)
             if (entityEntry.State == EntityState.Added)
             {
                 entity.CreatedAt = DateTime.UtcNow;

@@ -19,8 +19,6 @@ namespace Invoices.Core.ValueObjects
             yield return Amount;
         }
 
-        public static Money Empty() => _empty;
-
-        static Money _empty = new Money(string.Empty, 0.0m);
+        public static Money None => new Money(string.Empty, 0.0m);
     }
 }

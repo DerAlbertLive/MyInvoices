@@ -6,9 +6,9 @@ namespace Invoices.Core.Entities
     {
         protected ProjectPrice()
         {
-            Price = Money.Empty();
-            ProductPriceId = ProductPriceId.Zero;
-            ProjectId = ProjectId.Zero;
+            Price = Money.None;
+            ProductPriceId = ProductPriceId.None;
+            ProjectId = ProjectId.None;
         }
 
         public ProjectPrice(Money price, ProductPriceId productPriceId, ProjectId projectId, bool inactive) : this()
@@ -21,9 +21,7 @@ namespace Invoices.Core.Entities
 
         public ProductPriceId ProductPriceId { get; set; }
         public ProjectId ProjectId { get; set; }
-
         public Money Price { get; set; }
-
         public bool Inactive { get; set; }
     }
 }

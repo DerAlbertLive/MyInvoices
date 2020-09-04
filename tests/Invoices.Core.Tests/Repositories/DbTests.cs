@@ -13,8 +13,8 @@ namespace Invoices.Core.Tests.Repositories
     {
         DbConnection _dbConnection;
 
-        protected UserId UserId1 = UserId.Zero;
-        protected UserId UserId2 = UserId.Zero;
+        protected UserId UserId1 = UserId.None;
+        protected UserId UserId2 = UserId.None;
 
         public DbTests()
         {
@@ -49,8 +49,8 @@ namespace Invoices.Core.Tests.Repositories
         {
             var users = new[]
             {
-                new User(new PersonName("Albert", string.Empty, "Weinert"), EMail.Empty()),
-                new User(new PersonName("Awimba", string.Empty, "Weh"), EMail.Empty())
+                new User(new PersonName("Albert", string.Empty, "Weinert"), EMail.None),
+                new User(new PersonName("Awimba", string.Empty, "Weh"), EMail.None)
             };
 
             dbContext.Users.Add(users[0]);

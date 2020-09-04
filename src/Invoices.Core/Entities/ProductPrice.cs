@@ -6,10 +6,10 @@ namespace Invoices.Core.Entities
     {
         protected ProductPrice()
         {
-            Description = ShortDescription.Empty();
-            Price = Money.Empty();
-            VatId = VatId.Zero;
-            ProductId = ProductId.Zero;
+            Description = ShortDescription.None;
+            Price = Money.None;
+            VatId = VatId.None;
+            ProductId = ProductId.None;
         }
 
         public ProductPrice(ShortDescription description, Money price, VatId vatId, ProductId productId,

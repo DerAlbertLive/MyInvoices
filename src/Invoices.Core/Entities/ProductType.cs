@@ -6,7 +6,7 @@ namespace Invoices.Core.Entities
     {
         protected ProductType()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
         }
 
         public ProductType(ShortDescription description)

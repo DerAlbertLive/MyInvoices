@@ -6,9 +6,9 @@ namespace Invoices.Core.Entities
     {
         protected Customer()
         {
-            Name = CompanyName.Empty();
-            ContactName = PersonName.None();
-            MainAddress = Address.Empty();
+            Name = CompanyName.Empty;
+            ContactName = PersonName.None;
+            MainAddress = Address.None;
         }
 
         public Customer(CompanyName name, PersonName contactName) : this()

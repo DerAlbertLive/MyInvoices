@@ -15,16 +15,9 @@ namespace Invoices.Core.Entities
         protected Entity()
         {
             Id = EntityId<T>.New();
-            CreatedById = UserId.Zero;
-            ChangedById = UserId.Zero;
+            CreatedById = UserId.None;
+            ChangedById = UserId.None;
         }
-
-        // protected Entity(Guid id)
-        //     : this()
-        // {
-        //     Id = (T) Activator.CreateInstance(typeof(T), id);
-        // }
-
 
         public override bool Equals(object obj)
         {

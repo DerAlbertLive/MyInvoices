@@ -7,7 +7,7 @@ namespace Invoices.Core.Entities
     {
         protected Project()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
         }
 
         public Project(ShortDescription description, DateTimeOffset beginOfProject,

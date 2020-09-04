@@ -6,8 +6,8 @@ namespace Invoices.Core.Entities
     {
         protected Vat()
         {
-            Percent = Percent.Empty();
-            Description = ShortDescription.Empty();
+            Percent = Percent.None;
+            Description = ShortDescription.None;
         }
 
         public Vat(Percent percent, ShortDescription description) : this()

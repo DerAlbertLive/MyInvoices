@@ -18,8 +18,8 @@ namespace Invoices.Core.Entities
         protected User()
         {
             Id = UserId.New();
-            Name = PersonName.None();
-            EMail = EMail.Empty();
+            Name = PersonName.None;
+            EMail = EMail.None;
         }
 
         public User(PersonName name, EMail eMail) : this()

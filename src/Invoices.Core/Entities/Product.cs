@@ -8,9 +8,9 @@ namespace Invoices.Core.Entities
     {
         protected Product()
         {
-            Description = ShortDescription.Empty();
-            UnitOfQuantityId = UnitOfQuantityId.Zero;
-            ProductTypeId = ProductTypeId.Zero;
+            Description = ShortDescription.None;
+            UnitOfQuantityId = UnitOfQuantityId.None;
+            ProductTypeId = ProductTypeId.None;
         }
 
         public Product([NotNull] ShortDescription description, UnitOfQuantityId unitOfQuantityId, ProductTypeId productTypeId,

@@ -16,7 +16,6 @@ namespace Invoices.Core.ValueObjects
             yield return Value;
         }
 
-        public static ShortDescription Empty() => _empty;
-        static ShortDescription _empty = new ShortDescription(string.Empty);
+        public static ShortDescription None => new ShortDescription(string.Empty);
     }
 }

@@ -6,7 +6,7 @@ namespace Invoices.Core.Entities
     {
         protected UnitOfQuantity()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
             IsoCode = string.Empty;
             Short = string.Empty;
         }
