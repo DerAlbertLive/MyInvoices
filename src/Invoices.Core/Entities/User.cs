@@ -5,10 +5,13 @@ namespace Invoices.Core.Entities
 {
     public class User : IEntityChangedAt
     {
+        public UserId Id { get; }
+
         public PersonName Name { get; }
 
         protected User()
         {
+            Id = UserId.New();
             Name = PersonName.Empty();
             EMail = EMail.Empty();
         }
@@ -19,7 +22,6 @@ namespace Invoices.Core.Entities
             EMail = eMail;
         }
 
-        public long Id { get; }
         public DateTime CreatedAt { get; set; }
         public DateTime ChangedAt { get; set; }
         public EMail EMail { get; }

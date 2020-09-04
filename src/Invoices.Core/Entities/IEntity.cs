@@ -1,7 +1,7 @@
 namespace Invoices.Core.Entities
 {
-    public interface IEntity : IEntityChangedBy, IEntityChangedAt
+    public interface IEntity<T> : IEntityChangedBy, IEntityChangedAt
     {
-        public long Id { get; }
+
     }
 }

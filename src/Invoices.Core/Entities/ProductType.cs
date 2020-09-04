@@ -2,7 +2,7 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class ProductType : Entity
+    public class ProductType : Entity<ProductTypeId>
     {
         protected ProductType()
         {

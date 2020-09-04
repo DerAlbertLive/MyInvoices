@@ -2,7 +2,7 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class Customer : Entity
+    public class Customer : Entity<CustomerId>
     {
         protected Customer()
         {

@@ -45,7 +45,7 @@ namespace Invoices.Core.ValueObjects
 
         public bool Equals(ValueObject? other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return false;
 
             if (GetType() != other.GetType())

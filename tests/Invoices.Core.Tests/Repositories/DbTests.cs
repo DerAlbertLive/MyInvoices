@@ -13,6 +13,9 @@ namespace Invoices.Core.Tests.Repositories
     {
         DbConnection _dbConnection;
 
+        protected UserId UserId1 = UserId.Zero;
+        protected UserId UserId2 = UserId.Zero;
+
         public DbTests()
         {
             _dbConnection = new SqliteConnection("datasource=:memory:");
@@ -29,7 +32,10 @@ namespace Invoices.Core.Tests.Repositories
         /// <returns></returns>
         protected InvoicesDbContext GetNewDbContext()
         {
-            var options = new DbContextOptionsBuilder<InvoicesDbContext>().UseSqlite(_dbConnection).Options;
+            var optionsBuilder = new DbContextOptionsBuilder<InvoicesDbContext>().UseSqlite(_dbConnection);
+            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.EnableDetailedErrors();
+            var options = optionsBuilder.Options;
             var dbContext = new InvoicesDbContext(options, UserIdAccessor);
             if (dbContext.Database.EnsureCreated())
             {
@@ -44,13 +50,17 @@ namespace Invoices.Core.Tests.Repositories
             var users = new[]
             {
                 new User(new PersonName("Albert", string.Empty, "Weinert"), EMail.Empty()),
-                new User(new PersonName("Awimba", string.Empty, "Weh"), EMail.Empty())            };
+                new User(new PersonName("Awimba", string.Empty, "Weh"), EMail.Empty())
+            };
 
-            dbContext.Users.AddRange(users);
+            dbContext.Users.Add(users[0]);
+            dbContext.SaveChangesAsync().GetAwaiter().GetResult();
+            dbContext.Users.Add(users[1]);
             dbContext.SaveChangesAsync().GetAwaiter().GetResult();
 
+            UserId1 = users[0].Id;
+            UserId2 = users[1].Id;
             UserIdAccessor.UserId.Returns(users[0].Id);
-
         }
 
         public void Dispose()

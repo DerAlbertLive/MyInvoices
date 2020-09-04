@@ -2,7 +2,7 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class Vat : Entity
+    public class Vat : Entity<VatId>
     {
         protected Vat()
         {

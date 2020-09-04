@@ -3,7 +3,7 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class Project : Entity
+    public class Project : Entity<ProjectId>
     {
         protected Project()
         {

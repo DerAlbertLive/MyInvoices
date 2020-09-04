@@ -2,7 +2,7 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class UnitOfQuantity : Entity
+    public class UnitOfQuantity : Entity<UnitOfQuantityId>
     {
         protected UnitOfQuantity()
         {
