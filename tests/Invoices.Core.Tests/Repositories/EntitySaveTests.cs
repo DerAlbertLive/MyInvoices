@@ -64,8 +64,6 @@ namespace Invoices.Core.Tests.Repositories
 
             var query = db.Customers.Where(u => u.Name.Name1 == "Reinland Seifen");
 
-//            _outputHelper.WriteLine(query.ToQueryString());
-
             var result = await query.SingleOrDefaultAsync();
 
             result.Name.Name2.Should().Be("Line2");
@@ -95,8 +93,6 @@ namespace Invoices.Core.Tests.Repositories
                     c.ContactName.Given,
                     c.ContactName.Family
                 };
-
-     //       _outputHelper.WriteLine(query.ToQueryString());
 
             var result = await query.SingleOrDefaultAsync();
 
