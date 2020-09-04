@@ -30,8 +30,7 @@ namespace Invoices.Core.Data
         {
             BuildEntity(builder);
 
-            builder.Property(p => p.Id)
-                .HasConversion(p => p.Id, p => new CustomerId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
 
             builder.OwnsOnePersonName(p => p.ContactName);
 
@@ -43,14 +42,14 @@ namespace Invoices.Core.Data
         void BuildProductType(EntityTypeBuilder<ProductType> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new ProductTypeId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.OwnsOneShortDescription(e => e.Description);
         }
 
         void BuildUnitOfQuantity(EntityTypeBuilder<UnitOfQuantity> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new UnitOfQuantityId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.Property(e => e.IsoCode).HasMaxLength(6);
             builder.Property(e => e.Short).HasMaxLength(6);
             builder.OwnsOneShortDescription(e => e.Description);
@@ -59,7 +58,7 @@ namespace Invoices.Core.Data
         void BuildProject(EntityTypeBuilder<Project> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new ProjectId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.OwnsOneShortDescription(e => e.Description);
             builder.Property(e => e.BeginOfProject);
             builder.Property(e => e.EndOfProject);
@@ -68,7 +67,7 @@ namespace Invoices.Core.Data
         void BuildProjectPrice(EntityTypeBuilder<ProjectPrice> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new ProjectPriceId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.Property(p => p.ProductPriceId).HasConversion(p => p.Id, p => new ProductPriceId(p));
             builder.Property(p => p.ProjectId).HasConversion(p => p.Id, p => new ProjectId(p));
 
@@ -86,7 +85,7 @@ namespace Invoices.Core.Data
         void BuildProductPrice(EntityTypeBuilder<ProductPrice> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new ProductPriceId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.Property(p => p.VatId).HasConversion(p => p.Id, p => new VatId(p));
             builder.Property(p => p.ProductId).HasConversion(p => p.Id, p => new ProductId(p));
 
@@ -105,7 +104,7 @@ namespace Invoices.Core.Data
         void BuildProduct(EntityTypeBuilder<Product> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new ProductId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.Property(p => p.UnitOfQuantityId).HasConversion(p => p.Id, p => new UnitOfQuantityId(p));
             builder.Property(p => p.ProductTypeId).HasConversion(p => p.Id, p => new ProductTypeId(p));
 
@@ -122,17 +121,17 @@ namespace Invoices.Core.Data
         void BuildUser(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(nameof(User.Id));
-            builder.Property(e => e.Id)
-                .HasConversion(p => p.Id, p => new UserId(p));
+            builder.Property(e => e.Id).WithCustomKeyType();
 
             builder.OwnsOneEMail(p => p.EMail);
             builder.OwnsOnePersonName(p => p.Name);
+
         }
 
         void BuildVat(EntityTypeBuilder<Vat> builder)
         {
             BuildEntity(builder);
-            builder.Property(p => p.Id).HasConversion(p => p.Id, p => new VatId(p));
+            builder.Property(p => p.Id).WithCustomKeyType();
             builder.OwnsOnePercent(p => p.Percent);
             builder.OwnsOneShortDescription(p => p.Description);
         }
@@ -143,8 +142,6 @@ namespace Invoices.Core.Data
 
             builder.Property(e => e.ChangedById).HasConversion(p => p.Id, p => new UserId(p));
             builder.Property(e => e.CreatedById).HasConversion(p => p.Id, p => new UserId(p));
-            // builder.Property(nameof(IEntityChangedBy.ChangedById)).HasConversion(valueConvert);
-            // builder.Property(nameof(IEntityChangedBy.CreatedById)).HasConversion(valueConvert);
 
             builder.HasOne(typeof(User))
                 .WithMany()

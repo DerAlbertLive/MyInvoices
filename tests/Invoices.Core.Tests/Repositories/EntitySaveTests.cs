@@ -31,10 +31,10 @@ namespace Invoices.Core.Tests.Repositories
 
             var db = GetNewDbContext();
 
-            var userId = user.Id;
+            UserId userId = user.Id;
             var query = db.Users.Where(u => u.Id == userId);
 
-//            _outputHelper.WriteLine(query.ToQueryString());
+           _outputHelper.WriteLine(query.ToQueryString());
 
             var result = await query.SingleAsync();
 
@@ -54,6 +54,7 @@ namespace Invoices.Core.Tests.Repositories
         {
             var customer = new Customer(new CompanyName("Reinland Seifen", "Line2"),
                 new PersonName("Jutta", string.Empty, "Westphal"));
+
             using (var storeContext = GetNewDbContext())
             {
                 storeContext.Customers.Add(customer);

@@ -7,7 +7,7 @@ namespace Invoices.Core.Entities
         protected Customer()
         {
             Name = CompanyName.Empty();
-            ContactName = PersonName.Empty();
+            ContactName = PersonName.None();
             MainAddress = Address.Empty();
         }
 

@@ -9,10 +9,16 @@ namespace Invoices.Core.Entities
 
         public PersonName Name { get; }
 
+        public DateTime CreatedAt { get; set; }
+        public DateTime ChangedAt { get; set; }
+        public EMail EMail { get; }
+
+        public bool Locked { get; set; }
+
         protected User()
         {
             Id = UserId.New();
-            Name = PersonName.Empty();
+            Name = PersonName.None();
             EMail = EMail.Empty();
         }
 
@@ -22,10 +28,5 @@ namespace Invoices.Core.Entities
             EMail = eMail;
         }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime ChangedAt { get; set; }
-        public EMail EMail { get; }
-
-        public bool Locked { get; set; }
     }
 }

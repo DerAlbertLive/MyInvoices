@@ -1,4 +1,6 @@
 using System;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Invoices.Core.Entities
 {
@@ -31,10 +33,14 @@ namespace Invoices.Core.Entities
             if (obj is EntityId<T> entityId)
             {
                 return Id.Equals(entityId.Id);
-
             }
 
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
 
         public static bool operator ==(EntityId<T> a, Entity<T> b)
@@ -59,6 +65,21 @@ namespace Invoices.Core.Entities
         public static T New() => (T) Activator.CreateInstance(typeof(T), Guid.NewGuid());
     }
 
+    public class EntityIdValueComparer<T> : ValueComparer<T>
+        where T : EntityId<T>
+    {
+        public EntityIdValueComparer() : base((l, r) => l.Equals(r), id => id.GetHashCode())
+        {
+        }
+    }
+
+    public class EntityIdValueConversion<T> : ValueConverter<T, Guid> where T : EntityId<T>
+    {
+        public EntityIdValueConversion() : base(id => id.Id, guid => (T) Activator.CreateInstance(typeof(T), guid))
+        {
+        }
+    }
+
     public class VatId : EntityId<VatId>
     {
         public VatId(Guid id) : base(id)
@@ -71,7 +92,6 @@ namespace Invoices.Core.Entities
         public CustomerId(Guid id) : base(id)
         {
         }
-
     }
 
     public class ProductId : EntityId<ProductId>
@@ -79,7 +99,6 @@ namespace Invoices.Core.Entities
         public ProductId(Guid id) : base(id)
         {
         }
-
     }
 
     public class ProductPriceId : EntityId<ProductPriceId>
@@ -87,7 +106,6 @@ namespace Invoices.Core.Entities
         public ProductPriceId(Guid id) : base(id)
         {
         }
-
     }
 
     public class ProjectId : EntityId<ProjectId>
@@ -95,7 +113,6 @@ namespace Invoices.Core.Entities
         public ProjectId(Guid id) : base(id)
         {
         }
-
     }
 
     public class ProductTypeId : EntityId<ProductTypeId>
@@ -103,7 +120,6 @@ namespace Invoices.Core.Entities
         public ProductTypeId(Guid id) : base(id)
         {
         }
-
     }
 
     public class ProjectPriceId : EntityId<ProjectPriceId>
@@ -111,7 +127,6 @@ namespace Invoices.Core.Entities
         public ProjectPriceId(Guid id) : base(id)
         {
         }
-
     }
 
     public class UnitOfQuantityId : EntityId<UnitOfQuantityId>
@@ -119,7 +134,6 @@ namespace Invoices.Core.Entities
         public UnitOfQuantityId(Guid id) : base(id)
         {
         }
-
     }
 
     public class UserId : EntityId<UserId>

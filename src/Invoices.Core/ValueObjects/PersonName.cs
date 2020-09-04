@@ -22,7 +22,7 @@ namespace Invoices.Core.ValueObjects
             yield return Family;
         }
 
-        public static PersonName Empty() => _empty;
+        public static PersonName None() => _empty;
         static PersonName _empty = new PersonName(string.Empty, string.Empty, string.Empty);
     }
 }
