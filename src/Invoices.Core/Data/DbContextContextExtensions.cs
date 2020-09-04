@@ -38,27 +38,27 @@ namespace Invoices.Core.Data
         static void UpdateChangeUser(IEntityChangedBy entity, EntityEntry entityEntry,
             ICurrentUserIdAccessor currentUserIdAccessor)
         {
-            if (entityEntry.IsKeySet)
-            {
-                entity.ChangedById = currentUserIdAccessor.UserId;
-            }
-            else
+            if (entityEntry.State == EntityState.Added)
             {
                 entity.CreatedById = currentUserIdAccessor.UserId;
                 entity.ChangedById = entity.CreatedById;
+            }
+            else if (entity.ChangedById != UserId.None)
+            {
+                entity.ChangedById = currentUserIdAccessor.UserId;
             }
         }
 
         static void UpdateChangeTime(IEntityChangedAt entity, EntityEntry entityEntry)
         {
-            if (entityEntry.IsKeySet)
-            {
-                entity.ChangedAt = DateTime.UtcNow;
-            }
-            else
+            if (entityEntry.State == EntityState.Added)
             {
                 entity.CreatedAt = DateTime.UtcNow;
                 entity.ChangedAt = entity.CreatedAt;
+            }
+            else if (entity.ChangedAt != DateTime.MinValue)
+            {
+                entity.ChangedAt = DateTime.UtcNow;
             }
         }
     }

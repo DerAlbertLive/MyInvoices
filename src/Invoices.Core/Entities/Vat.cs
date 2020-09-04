@@ -2,12 +2,12 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class Vat : Entity
+    public class Vat : Entity<VatId>
     {
         protected Vat()
         {
-            Percent = Percent.Empty();
-            Description = ShortDescription.Empty();
+            Percent = Percent.None;
+            Description = ShortDescription.None;
         }
 
         public Vat(Percent percent, ShortDescription description) : this()

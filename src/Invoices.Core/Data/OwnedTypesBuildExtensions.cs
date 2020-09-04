@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using Invoices.Core.Entities;
 using Invoices.Core.ValueObjects;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
@@ -170,6 +171,14 @@ namespace Invoices.Core.Data
             }
 
             throw new ArgumentException("Action must be a member expression.");
+        }
+
+        public static PropertyBuilder<T> WithCustomKeyType<T>(this PropertyBuilder<T> builder)
+            where T : EntityId<T>
+        {
+            builder.HasConversion(new EntityIdValueConversion<T>())
+                .Metadata.SetValueComparer(new EntityIdValueComparer<T>());
+            return builder;
         }
     }
 }

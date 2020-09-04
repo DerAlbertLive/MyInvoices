@@ -3,11 +3,11 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class Project : Entity
+    public class Project : Entity<ProjectId>
     {
         protected Project()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
         }
 
         public Project(ShortDescription description, DateTimeOffset beginOfProject,

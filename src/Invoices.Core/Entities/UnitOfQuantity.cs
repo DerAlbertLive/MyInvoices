@@ -2,11 +2,11 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class UnitOfQuantity : Entity
+    public class UnitOfQuantity : Entity<UnitOfQuantityId>
     {
         protected UnitOfQuantity()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
             IsoCode = string.Empty;
             Short = string.Empty;
         }

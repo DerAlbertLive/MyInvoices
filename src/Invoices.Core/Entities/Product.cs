@@ -4,14 +4,16 @@ using JetBrains.Annotations;
 
 namespace Invoices.Core.Entities
 {
-    public class Product : Entity
+    public class Product : Entity<ProductId>
     {
         protected Product()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
+            UnitOfQuantityId = UnitOfQuantityId.None;
+            ProductTypeId = ProductTypeId.None;
         }
 
-        public Product([NotNull] ShortDescription description, long unitOfQuantityId, long productTypeId,
+        public Product([NotNull] ShortDescription description, UnitOfQuantityId unitOfQuantityId, ProductTypeId productTypeId,
             bool inactive) : this()
         {
             Description = description ?? throw new ArgumentNullException(nameof(description));
@@ -21,8 +23,8 @@ namespace Invoices.Core.Entities
         }
 
         public ShortDescription Description { get; set; }
-        public long UnitOfQuantityId { get; set; }
-        public long ProductTypeId { get; set; }
+        public UnitOfQuantityId UnitOfQuantityId { get; set; }
+        public ProductTypeId ProductTypeId { get; set; }
 
         public bool Inactive { get; set; }
     }

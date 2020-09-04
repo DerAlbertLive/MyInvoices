@@ -2,11 +2,11 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class ProductType : Entity
+    public class ProductType : Entity<ProductTypeId>
     {
         protected ProductType()
         {
-            Description = ShortDescription.Empty();
+            Description = ShortDescription.None;
         }
 
         public ProductType(ShortDescription description)

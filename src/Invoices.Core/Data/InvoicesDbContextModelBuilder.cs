@@ -15,20 +15,22 @@ namespace Invoices.Core.Data
 
         public void Build()
         {
+            BuildCustomer(_modelBuilder.Entity<Customer>());
             BuildProduct(_modelBuilder.Entity<Product>());
-            BuildProductRate(_modelBuilder.Entity<ProductPrice>());
+            BuildProductPrice(_modelBuilder.Entity<ProductPrice>());
             BuildProject(_modelBuilder.Entity<Project>());
             BuildProductType(_modelBuilder.Entity<ProductType>());
-            BuildProjectRate(_modelBuilder.Entity<ProjectPrice>());
+            BuildProjectPrice(_modelBuilder.Entity<ProjectPrice>());
             BuildUnitOfQuantity(_modelBuilder.Entity<UnitOfQuantity>());
             BuildVat(_modelBuilder.Entity<Vat>());
             BuildUser(_modelBuilder.Entity<User>());
-            BuildCustomer(_modelBuilder.Entity<Customer>());
         }
 
         void BuildCustomer(EntityTypeBuilder<Customer> builder)
         {
             BuildEntity(builder);
+
+            builder.Property(p => p.Id).WithCustomKeyType();
 
             builder.OwnsOnePersonName(p => p.ContactName);
 
@@ -37,61 +39,74 @@ namespace Invoices.Core.Data
             builder.OwnsOneAddress(p => p.MainAddress);
         }
 
-        void BuildProductType(EntityTypeBuilder<ProductType> entity)
+        void BuildProductType(EntityTypeBuilder<ProductType> builder)
         {
-            BuildEntity(entity);
-            entity.OwnsOneShortDescription(e => e.Description);
+            BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.OwnsOneShortDescription(e => e.Description);
         }
 
-        void BuildUnitOfQuantity(EntityTypeBuilder<UnitOfQuantity> entity)
+        void BuildUnitOfQuantity(EntityTypeBuilder<UnitOfQuantity> builder)
         {
-            BuildEntity(entity);
-            entity.Property(e => e.IsoCode).HasMaxLength(6);
-            entity.Property(e => e.Short).HasMaxLength(6);
-            entity.OwnsOneShortDescription(e => e.Description);
+            BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.Property(e => e.IsoCode).HasMaxLength(6);
+            builder.Property(e => e.Short).HasMaxLength(6);
+            builder.OwnsOneShortDescription(e => e.Description);
         }
 
-        void BuildProject(EntityTypeBuilder<Project> entity)
+        void BuildProject(EntityTypeBuilder<Project> builder)
         {
-            BuildEntity(entity);
-            entity.OwnsOneShortDescription(e => e.Description);
-            entity.Property(e => e.BeginOfProject);
-            entity.Property(e => e.EndOfProject);
+            BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.OwnsOneShortDescription(e => e.Description);
+            builder.Property(e => e.BeginOfProject);
+            builder.Property(e => e.EndOfProject);
         }
 
-        void BuildProjectRate(EntityTypeBuilder<ProjectPrice> entity)
+        void BuildProjectPrice(EntityTypeBuilder<ProjectPrice> builder)
         {
-            BuildEntity(entity);
-            entity.HasOne<ProjectPrice>()
+            BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.Property(p => p.ProductPriceId).HasConversion(p => p.Id, p => new ProductPriceId(p));
+            builder.Property(p => p.ProjectId).HasConversion(p => p.Id, p => new ProjectId(p));
+
+            builder.HasOne<ProductPrice>()
                 .WithMany()
                 .HasForeignKey(e => e.ProductPriceId);
 
-            entity.HasOne<Project>()
+            builder.HasOne<Project>()
                 .WithMany()
                 .HasForeignKey(e => e.ProjectId);
 
-            entity.OwnsOneMoney(p => p.Price);
+            builder.OwnsOneMoney(p => p.Price);
         }
 
-        void BuildProductRate(EntityTypeBuilder<ProductPrice> entity)
+        void BuildProductPrice(EntityTypeBuilder<ProductPrice> builder)
         {
-            BuildEntity(entity);
+            BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.Property(p => p.VatId).HasConversion(p => p.Id, p => new VatId(p));
+            builder.Property(p => p.ProductId).HasConversion(p => p.Id, p => new ProductId(p));
 
-            entity.HasOne<Vat>()
+            builder.HasOne<Vat>()
                 .WithMany()
                 .HasForeignKey(e => e.VatId);
 
-            entity.HasOne<Product>()
+            builder.HasOne<Product>()
                 .WithMany()
                 .HasForeignKey(e => e.ProductId);
 
-            entity.OwnsOneShortDescription(p => p.Description);
-            entity.OwnsOneMoney(p => p.Price);
+            builder.OwnsOneShortDescription(p => p.Description);
+            builder.OwnsOneMoney(p => p.Price);
         }
 
         void BuildProduct(EntityTypeBuilder<Product> builder)
         {
             BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.Property(p => p.UnitOfQuantityId).HasConversion(p => p.Id, p => new UnitOfQuantityId(p));
+            builder.Property(p => p.ProductTypeId).HasConversion(p => p.Id, p => new ProductTypeId(p));
 
             builder.OwnsOneShortDescription(p => p.Description);
             builder.HasOne<UnitOfQuantity>()
@@ -106,20 +121,27 @@ namespace Invoices.Core.Data
         void BuildUser(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(nameof(User.Id));
+            builder.Property(e => e.Id).WithCustomKeyType();
+
             builder.OwnsOneEMail(p => p.EMail);
             builder.OwnsOnePersonName(p => p.Name);
+
         }
 
-        void BuildVat(EntityTypeBuilder<Vat> vat)
+        void BuildVat(EntityTypeBuilder<Vat> builder)
         {
-            BuildEntity(vat);
-            vat.OwnsOnePercent(p => p.Percent);
-            vat.OwnsOneShortDescription(p => p.Description);
+            BuildEntity(builder);
+            builder.Property(p => p.Id).WithCustomKeyType();
+            builder.OwnsOnePercent(p => p.Percent);
+            builder.OwnsOneShortDescription(p => p.Description);
         }
 
-        void BuildEntity(EntityTypeBuilder builder)
+        void BuildEntity<T>(EntityTypeBuilder<T> builder) where T : class, IEntityChangedBy
         {
-            builder.HasKey(nameof(Entity.Id));
+            builder.HasKey("Id");
+
+            builder.Property(e => e.ChangedById).HasConversion(p => p.Id, p => new UserId(p));
+            builder.Property(e => e.CreatedById).HasConversion(p => p.Id, p => new UserId(p));
 
             builder.HasOne(typeof(User))
                 .WithMany()

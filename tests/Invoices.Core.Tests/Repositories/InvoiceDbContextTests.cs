@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Invoices.Core.Entities;
@@ -42,6 +41,8 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
+            UserIdAccessor.UserId.Returns(UserId1);
+
             var vat = new Vat(new Percent(16.0m),  new ShortDescription("CreatedVat"));
 
             dbContext.Vats.Add(vat);
@@ -50,8 +51,8 @@ namespace Invoices.Core.Tests.Repositories
 
             var result = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
 
-            result.CreatedById.Should().Be(1);
-            result.ChangedById.Should().Be(1);
+            result.CreatedById.Should().Be(UserId1);
+            result.ChangedById.Should().Be(UserId1);
         }
 
         [Fact]
@@ -91,14 +92,14 @@ namespace Invoices.Core.Tests.Repositories
 
             vat.ChangeDescription(new ShortDescription("ChangedAt"));
 
-            UserIdAccessor.UserId.Returns(2);
+            UserIdAccessor.UserId.Returns(UserId2);
 
             await dbContext.SaveChangesAsync();
 
             var result = await dbContext.Vats.SingleAsync(v => v.Description.Value == "ChangedAt");
 
-            result.CreatedById.Should().Be(1);
-            result.ChangedById.Should().Be(2);
+            result.CreatedById.Should().Be(UserId1);
+            result.ChangedById.Should().Be(UserId2);
 
         }
     }

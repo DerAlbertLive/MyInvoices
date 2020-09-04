@@ -16,7 +16,6 @@ namespace Invoices.Core.ValueObjects
             yield return Value;
         }
 
-        public static EMail Empty() => _empty;
-        static EMail _empty => new EMail(string.Empty);
+        public static EMail None => new EMail(string.Empty);
     }
 }

@@ -2,13 +2,13 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class Customer : Entity
+    public class Customer : Entity<CustomerId>
     {
         protected Customer()
         {
-            Name = CompanyName.Empty();
-            ContactName = PersonName.Empty();
-            MainAddress = Address.Empty();
+            Name = CompanyName.Empty;
+            ContactName = PersonName.None;
+            MainAddress = Address.None;
         }
 
         public Customer(CompanyName name, PersonName contactName) : this()

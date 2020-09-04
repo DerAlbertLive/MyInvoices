@@ -1,13 +1,10 @@
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Invoices.Core.Entities;
 using Invoices.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using NSubstitute;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -34,37 +31,39 @@ namespace Invoices.Core.Tests.Repositories
 
             var db = GetNewDbContext();
 
-            var query = db.Users.Where(u => u.Name.Family == "Bueller");
+            UserId userId = user.Id;
+            var query = db.Users.Where(u => u.Id == userId);
 
-            _outputHelper.WriteLine(query.ToQueryString());
+           _outputHelper.WriteLine(query.ToQueryString());
 
             var result = await query.SingleAsync();
 
             result.Should().NotBeSameAs(user);
 
+            result.Id.Should().Be(user.Id);
+
+            result.EMail.Value.Should().Be("info@der-albert.com");
+
             result.Name.Given.Should().Be("Ferris");
             result.Name.Middle.Should().Be("M");
             result.Name.Family.Should().Be("Bueller");
-
-            result.EMail.Value.Should().Be("info@der-albert.com");
         }
 
         [Fact]
         public async Task Customer_can_be_stored_and_loaded()
         {
-            var company = new Customer(new CompanyName("Reinland Seifen", "Line2"),
+            var customer = new Customer(new CompanyName("Reinland Seifen", "Line2"),
                 new PersonName("Jutta", string.Empty, "Westphal"));
+
             using (var storeContext = GetNewDbContext())
             {
-                storeContext.Customers.Add(company);
+                storeContext.Customers.Add(customer);
                 await storeContext.SaveChangesAsync();
             }
 
             var db = GetNewDbContext();
 
             var query = db.Customers.Where(u => u.Name.Name1 == "Reinland Seifen");
-
-            _outputHelper.WriteLine(query.ToQueryString());
 
             var result = await query.SingleOrDefaultAsync();
 
@@ -95,8 +94,6 @@ namespace Invoices.Core.Tests.Repositories
                     c.ContactName.Given,
                     c.ContactName.Family
                 };
-
-            _outputHelper.WriteLine(query.ToQueryString());
 
             var result = await query.SingleOrDefaultAsync();
 
@@ -195,7 +192,10 @@ namespace Invoices.Core.Tests.Repositories
                 var unit = new UnitOfQuantity("M", "m", new ShortDescription("minuten"));
                 var productType = new ProductType(new ShortDescription("Dinge"));
                 storeContext.Units.AddRange(unit);
+                await storeContext.SaveChangesAsync();
+
                 storeContext.ProductTypes.AddRange(productType);
+
                 await storeContext.SaveChangesAsync();
                 var product = new Product(new ShortDescription("Hello"), unit.Id, productType.Id, true);
                 storeContext.Products.Add(product);
@@ -330,7 +330,7 @@ namespace Invoices.Core.Tests.Repositories
                     pp.Price.Currency
                 };
 
-            _outputHelper.WriteLine(query.ToQueryString());
+        //    _outputHelper.WriteLine(query.ToQueryString());
             var result = await query.SingleOrDefaultAsync();
 
             result.Amount.Should().Be(45.0m);
