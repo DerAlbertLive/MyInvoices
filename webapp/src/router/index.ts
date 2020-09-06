@@ -1,12 +1,12 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+
 import CustomerRoutes from '@/modules/customers/customers-routes';
 import InvoicesRoutes from '@/modules/invoices/invoices-routes';
 import TimeKeepingRoutes from '@/modules/timeKeeping/time-keeping-routes';
 
-Vue.use(VueRouter);
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
@@ -15,16 +15,15 @@ const routes: Array<RouteConfig> = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: 'about' */ '../views/About.vue')
+    component: About
   },
   TimeKeepingRoutes,
   InvoicesRoutes,
   CustomerRoutes
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes
 });
 

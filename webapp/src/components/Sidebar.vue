@@ -1,12 +1,12 @@
 <template>
-  <div>Sidebar
+  <div>
     <router-view name="sidebar"></router-view>
   </div>
 </template>
 
 <script lang="ts">
-
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   data() {
     return {
       expandOnHover: false,
@@ -14,7 +14,7 @@ export default {
       reduce: false
     };
   }
-};
+});
 </script>
 
 <style lang="scss"></style>

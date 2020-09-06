@@ -1,16 +1,19 @@
 <template>
-  <section class="hero is-primary is-bold">
-    <div class="hero-body">
-      <h1 class="title">Welcome to Invoices,</h1>
-      <h2 class="subtitle">the time recording and invoice management.</h2>
+  <section>
+    <div>
+      <h1>Welcome to Invoices,</h1>
+      <h2>the time recording and invoice management.</h2>
+    </div>
+    <div class="bg-black text-white md:text-yellow">
+      Test
     </div>
   </section>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 
-export default {
-  name: 'Home',
-  components: {}
-};
+export default defineComponent({
+  name: 'Home'
+});
 </script>

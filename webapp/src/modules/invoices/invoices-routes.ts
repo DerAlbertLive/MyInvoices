@@ -1,6 +1,6 @@
-import { RouteConfig } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router';
 
-const routes: RouteConfig = {
+const routes: RouteRecordRaw = {
   path: '/invoices',
   name: 'invoicesContainer',
   redirect: 'invoices',
