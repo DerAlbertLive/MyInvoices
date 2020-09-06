@@ -15,13 +15,12 @@
 <script lang="ts">
 import Header from '@/components/Header.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { defineComponent } from '@vue/composition-api';
 
-export default defineComponent({
+export default {
   components: {
     Header,
     Sidebar
   }
-});
+};
 </script>
 <style lang="scss"></style>

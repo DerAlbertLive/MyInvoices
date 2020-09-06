@@ -8,10 +8,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
 
-export default defineComponent({
+export default {
   name: 'Home',
   components: {}
-});
+};
 </script>

@@ -1,13 +1,12 @@
 <template>
-  <b-sidebar position="static" mobile="reduced" type="is-light" open>
+  <div>Sidebar
     <router-view name="sidebar"></router-view>
-  </b-sidebar>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
 
-export default defineComponent({
+export default {
   data() {
     return {
       expandOnHover: false,
@@ -15,7 +14,7 @@ export default defineComponent({
       reduce: false
     };
   }
-});
+};
 </script>
 
 <style lang="scss"></style>
