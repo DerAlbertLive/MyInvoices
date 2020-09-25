@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/Home.vue';
-import About from '@/views/About.vue';
 
 import CustomerRoutes from '@/modules/customers/customers-routes';
 import InvoicesRoutes from '@/modules/invoices/invoices-routes';
@@ -10,12 +8,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: import(/* webpackChunkName: "home" */ '@/views/Home.vue')
   },
   {
     path: '/about',
     name: 'about',
-    component: About
+    component: import(/* webpackChunkName: "home" */ '@/views/About.vue')
   },
   TimeKeepingRoutes,
   InvoicesRoutes,

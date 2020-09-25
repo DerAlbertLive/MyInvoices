@@ -13,7 +13,7 @@
       >
         <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
         </svg>
       </button>
     </div>
@@ -42,7 +42,6 @@
         </router-link>
       </div>
     </div>
-
   </nav>
 </template>
 
@@ -55,10 +54,10 @@ export default defineComponent({
     return {
       showMenu: true,
       items: [
-        {route: 'home', caption: 'Home'},
-        {route: 'time-keeping', caption: 'TimeKeeping'},
-        {route: 'invoices', caption: 'Invoices'},
-        {route: 'customers', caption: 'Customers'}
+        { route: 'home', caption: 'Home' },
+        { route: 'time-keeping', caption: 'TimeKeeping' },
+        { route: 'invoices', caption: 'Invoices' },
+        { route: 'customers', caption: 'Customers' }
       ]
     };
   }
