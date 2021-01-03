@@ -11,9 +11,9 @@ export default defineComponent({
     return {
       expandOnHover: false,
       mobile: 'reduce',
-      reduce: false
+      reduce: false,
     };
-  }
+  },
 });
 </script>
 

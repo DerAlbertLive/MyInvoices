@@ -8,21 +8,21 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: import(/* webpackChunkName: "home" */ '@/views/Home.vue')
+    component: import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
   },
   {
     path: '/about',
     name: 'about',
-    component: import(/* webpackChunkName: "home" */ '@/views/About.vue')
+    component: import(/* webpackChunkName: "home" */ '@/views/About.vue'),
   },
   TimeKeepingRoutes,
   InvoicesRoutes,
-  CustomerRoutes
+  CustomerRoutes,
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 
 export default router;

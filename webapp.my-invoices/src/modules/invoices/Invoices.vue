@@ -28,21 +28,15 @@ export default defineComponent({
     invoices: {
       type: Array as PropType<InvoiceOverview[]>,
       required: false,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   setup(props) {
     const visibleInvoices = computed(() => props.invoices);
     return {
-      visibleInvoices
+      visibleInvoices,
     };
   },
-  methods: {
-    addInvoice() {
-      const a = this.invoices[0];
-      const b = a.customerName;
-    }
-  }
 });
 </script>
 <style lang="scss"></style>

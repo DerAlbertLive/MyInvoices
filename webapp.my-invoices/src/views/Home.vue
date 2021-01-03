@@ -4,9 +4,7 @@
       <h1>Welcome to Invoices,</h1>
       <h2>the time recording and invoice management.</h2>
     </div>
-    <div class="bg-black text-white md:text-yellow">
-      Test
-    </div>
+    <div class="bg-black text-white md:text-yellow">Test</div>
   </section>
 </template>
 
@@ -14,6 +12,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Home'
+  name: 'Home',
 });
 </script>

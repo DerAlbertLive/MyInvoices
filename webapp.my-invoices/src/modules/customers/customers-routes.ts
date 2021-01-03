@@ -6,18 +6,18 @@ const routes: RouteRecordRaw = {
   redirect: 'customers',
   components: {
     default: () => import(/* webpackChunkName: "Customers" */ './CustomersContainer.vue'),
-    sidebar: () => import(/* webpackChunkName: "Customers" */ './CustomersSidebar.vue')
+    sidebar: () => import(/* webpackChunkName: "Customers" */ './CustomersSidebar.vue'),
   },
   meta: {
-    title: 'Customers'
+    title: 'Customers',
   },
   children: [
     {
       path: '',
       name: 'customers',
-      component: () => import(/* webpackChunkName: "Customers" */ './Customers.vue')
-    }
-  ]
+      component: () => import(/* webpackChunkName: "Customers" */ './Customers.vue'),
+    },
+  ],
 };
 
 export default routes;

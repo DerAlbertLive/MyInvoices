@@ -3,7 +3,7 @@
     <Header />
     <div class="flex">
       <div class="w-1/5 lg:w-1/6 bg-orange-200 h-screen p-1 text-orange-800">
-        <Sidebar />
+        <Sidebar class="tex" />
       </div>
       <div class="w-4/5 lg:w-5/6 p-1">
         <router-view />
@@ -23,8 +23,8 @@ export default defineComponent({
   components: {
     Header,
     Sidebar,
-    Debug
-  }
+    Debug,
+  },
 });
 </script>
 <style lang="scss" src="./assets/css/site.scss"></style>

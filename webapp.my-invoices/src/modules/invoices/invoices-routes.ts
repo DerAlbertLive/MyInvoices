@@ -6,18 +6,18 @@ const routes: RouteRecordRaw = {
   redirect: 'invoices',
   components: {
     default: () => import(/* webpackChunkName: "Invoices" */ './InvoicesContainer.vue'),
-    sidebar: () => import(/* webpackChunkName: "Invoices" */ './InvoicesSidebar.vue')
+    sidebar: () => import(/* webpackChunkName: "Invoices" */ './InvoicesSidebar.vue'),
   },
   meta: {
-    title: 'Invoices'
+    title: 'Invoices',
   },
   children: [
     {
       path: '',
       name: 'invoices',
-      component: () => import(/* webpackChunkName: "Invoices" */ './Invoices.vue')
-    }
-  ]
+      component: () => import(/* webpackChunkName: "Invoices" */ './Invoices.vue'),
+    },
+  ],
 };
 
 export default routes;

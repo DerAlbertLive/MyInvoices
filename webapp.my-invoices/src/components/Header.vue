@@ -23,7 +23,7 @@
           v-for="item in items"
           :key="item.route"
           :to="{ name: item.route }"
-          class="inline-block mt-0  text-orange-200 hover:text-white mr-4 z-10"
+          class="inline-block mt-0 text-orange-200 hover:text-white mr-4 z-10"
         >
           {{ item.caption }}
         </router-link>
@@ -31,12 +31,12 @@
     </div>
 
     <div v-if="showMenu" class="w-full block sm:hidden flex-grow bg-orange-500">
-      <div class="text-sm sm:flex-grow absolute bg-orange-500 right-0  p-2  mt-2 shadow-2xl">
+      <div class="text-sm sm:flex-grow absolute bg-orange-500 right-0 p-2 mt-2 shadow-2xl">
         <router-link
           v-for="item in items"
           :key="item.route"
           :to="{ name: item.route }"
-          class="block mt-4  text-orange-200 hover:text-white mr-4"
+          class="block mt-4 text-orange-200 hover:text-white mr-4"
         >
           {{ item.caption }}
         </router-link>
@@ -57,10 +57,10 @@ export default defineComponent({
         { route: 'home', caption: 'Home' },
         { route: 'time-keeping', caption: 'TimeKeeping' },
         { route: 'invoices', caption: 'Invoices' },
-        { route: 'customers', caption: 'Customers' }
-      ]
+        { route: 'customers', caption: 'Customers' },
+      ],
     };
-  }
+  },
 });
 </script>
 
