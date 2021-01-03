@@ -1,4 +1,5 @@
 using System;
+using NStack;
 using Terminal.Gui;
 
 namespace Invoices.App
@@ -44,7 +45,7 @@ namespace Invoices.App
 
                 // The ones laid out like an australopithecus, with absolute positions:
                 new CheckBox (3, 6, "Remember me"),
-                new RadioGroup (3, 8, new [] { "_Personal", "_Company" }),
+                new RadioGroup (3, 8, new ustring[] { "_Personal", "_Company" }),
                 new Button (3, 14, "Ok"),
                 new Button (10, 14, "Cancel"),
                 new Label (3, 18, "Press F9 or ESC plus 9 to activate the menubar"));

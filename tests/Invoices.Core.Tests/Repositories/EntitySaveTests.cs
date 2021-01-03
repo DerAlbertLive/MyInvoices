@@ -36,6 +36,7 @@ namespace Invoices.Core.Tests.Repositories
 
            _outputHelper.WriteLine(query.ToQueryString());
 
+           var sql = query.ToQueryString();
             var result = await query.SingleAsync();
 
             result.Should().NotBeSameAs(user);

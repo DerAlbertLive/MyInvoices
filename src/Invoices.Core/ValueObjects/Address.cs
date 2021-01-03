@@ -1,27 +1,7 @@
-using System.Collections.Generic;
-
 namespace Invoices.Core.ValueObjects
 {
-    public class Address : ValueObject
+    public record Address(string Street, string City, string ZipCode)
     {
-        public string Street { get; }
-        public string City { get; }
-        public string ZipCode { get; }
-
-        public Address(string street, string city, string zipCode)
-        {
-            Street = street;
-            City = city;
-            ZipCode = zipCode;
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Street;
-            yield return City;
-            yield return ZipCode;
-        }
-
-        public static Address None => new Address(string.Empty, string.Empty, string.Empty);
+        public static Address None => new(string.Empty, string.Empty, string.Empty);
     }
 }

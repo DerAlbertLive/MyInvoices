@@ -2,10 +2,5 @@ using System;
 
 namespace Invoices.Core.Entities
 {
-    public class UserId : EntityId<UserId>
-    {
-        public UserId(Guid id) : base(id)
-        {
-        }
-    }
+    public record UserId(Guid Id) : EntityId<UserId>(Id);
 }

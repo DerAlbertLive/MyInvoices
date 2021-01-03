@@ -27,6 +27,5 @@ namespace Invoices.Core.Entities
             Name = name;
             EMail = eMail;
         }
-
     }
 }
