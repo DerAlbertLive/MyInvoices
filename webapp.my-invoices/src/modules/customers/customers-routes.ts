@@ -10,6 +10,9 @@ const routes: RouteRecordRaw = {
   },
   meta: {
     title: 'Customers',
+    nav: {
+      caption: 'Customers',
+    },
   },
   children: [
     {

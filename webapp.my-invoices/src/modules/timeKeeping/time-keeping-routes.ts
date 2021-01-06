@@ -10,6 +10,9 @@ const routes: RouteRecordRaw = {
   },
   meta: {
     title: 'Time Keeping',
+    nav: {
+      caption: 'Time Keeping',
+    },
   },
   children: [
     {

@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   purge: ['./src/**/*.html', './src/**/*.vue', './src/**/*.jsx'],
   future: {
@@ -5,8 +8,16 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
   },
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        orange: colors.orange,
+      },
+    },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    // ...
+  ],
 };

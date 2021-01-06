@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container h-screen">
-    <Header />
+    <NavHeader />
     <div class="flex">
       <div class="w-1/5 lg:w-1/6 bg-orange-200 h-screen p-1 text-orange-800">
         <Sidebar class="tex" />
@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-import Header from '@/components/Header.vue';
+import NavHeader from './components/NavHeader.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import Debug from '@/components/Debug.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   components: {
-    Header,
+    NavHeader,
     Sidebar,
     Debug,
   },

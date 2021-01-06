@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h2>Customers</h2>
+    <h2>Customer</h2>
   </div>
 </template>
 
 <script lang="ts">
-export default {};
+import { defineComponent } from 'vue';
+
+export default defineComponent({});
 </script>
 <style lang="scss"></style>

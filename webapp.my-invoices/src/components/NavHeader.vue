@@ -47,18 +47,25 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: 'header',
-  data() {
+  name: 'NavHeader',
+  setup() {
+    const router = useRouter();
+    const routes = router.getRoutes();
+    const items = routes
+      .filter((r) => r.meta?.nav?.caption)
+      .map((r) => {
+        return {
+          route: r.name,
+          caption: r.meta.nav.caption,
+        };
+      });
+
     return {
       showMenu: true,
-      items: [
-        { route: 'home', caption: 'Home' },
-        { route: 'time-keeping', caption: 'TimeKeeping' },
-        { route: 'invoices', caption: 'Invoices' },
-        { route: 'customers', caption: 'Customers' },
-      ],
+      items,
     };
   },
 });
