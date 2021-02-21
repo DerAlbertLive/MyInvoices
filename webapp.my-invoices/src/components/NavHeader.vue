@@ -1,56 +1,116 @@
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-orange-500 p-6">
-    <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <span class="font-serif font-semibold text-xl tracking-tight block sm:hidden">MI</span>
-      <span class="font-serif font-semibold text-xl tracking-tight hidden sm:block">
-        My Invoices
-      </span>
-    </div>
-    <div class="block sm:hidden">
-      <button
-        @click="showMenu = !showMenu"
-        class="flex items-center px-3 py-2 border rounded text-orange-200 border-orange-400 hover:text-white hover:border-white"
-      >
-        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-        </svg>
-      </button>
-    </div>
-    <div class="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
-      <div class="hidden sm:block text-sm flex-grow">
-        <router-link
-          v-for="item in items"
-          :key="item.route"
-          :to="{ name: item.route }"
-          class="inline-block mt-0 text-orange-200 hover:text-white mr-4 z-10"
-        >
-          {{ item.caption }}
-        </router-link>
+  <header class="bg-green-500 h-10">
+    <nav class="h-full flex items-center justify-between relative bg-inherit">
+      <div class="pl-2 h-full flex items-center">
+        <span class="font-serif font-semibold text-xl tracking-tight block">My Invoices</span>
       </div>
-    </div>
-
-    <div v-if="showMenu" class="w-full block sm:hidden flex-grow bg-orange-500">
-      <div class="text-sm sm:flex-grow absolute bg-orange-500 right-0 p-2 mt-2 shadow-2xl">
-        <router-link
-          v-for="item in items"
-          :key="item.route"
-          :to="{ name: item.route }"
-          class="block mt-4 text-orange-200 hover:text-white mr-4"
-        >
-          {{ item.caption }}
-        </router-link>
+      <div class="hidden sm:block h-full flex items-center">
+        <ul class="top-nav h-full">
+          <li v-for="item in items" :key="item.route" class="flex items-center pt-2">
+            <router-link :to="{ name: item.route }">
+              {{ item.caption }}
+            </router-link>
+          </li>
+        </ul>
       </div>
-    </div>
-  </nav>
+      <div class="block sm:hidden right-0 h-full flex flex-col bg-inherit">
+        <div class="">
+          <button
+            @click="showMenu = !showMenu"
+            class="float-right flex items-center px-3 py-2 border rounded text-green-200 border-green-400 hover:text-white hover:border-white"
+          >
+            <SvgHamburger />
+          </button>
+        </div>
+        <div v-if="showMenu" class="block sm:hidden bg-inherit">
+          <ul class="mobile-nav">
+            <li v-for="item in items" :key="item.route" class="block px-2 py-2">
+              <router-link :to="{ name: item.route }">
+                {{ item.caption }}
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 </template>
+<style lang="scss" scoped>
+header::after {
+  content: '';
+  @apply table clear-both;
+}
 
+.bg-inherit {
+  background-color: inherit;
+}
+
+.top-nav {
+  li {
+    @apply inline-block ml-4 mr-1 h-full;
+    @apply relative;
+  }
+
+  a {
+    &::before {
+      content: '';
+      @apply absolute bottom-0;
+      @apply border-t-4 border-green-700;
+      @apply left-2/4 w-0;
+      @apply opacity-0;
+
+      transition: left ease-in-out 200ms, width ease-in-out 200ms, opacity ease-in-out 250ms;
+    }
+
+    &:hover::before,
+    &.active::before {
+      @apply opacity-100;
+      @apply left-0 w-full;
+    }
+
+    &.active:before {
+      @apply opacity-100;
+      @apply border-green-900;
+    }
+  }
+}
+
+.mobile-nav {
+  li {
+    position: relative;
+  }
+
+  a {
+    &::before {
+      content: '';
+      @apply absolute;
+      @apply left-0 border-l-4 border-green-700;
+      @apply top-2/4 h-0;
+      @apply opacity-0;
+      transition: height ease-in-out 200ms, top ease-in-out 200ms, opacity ease-in-out 250ms;
+    }
+
+    &:hover::before,
+    &.active::before {
+      @apply opacity-100;
+      @apply h-full top-0;
+    }
+
+    &.active:before {
+      @apply opacity-100;
+      @apply border-green-900;
+    }
+  }
+}
+</style>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import SvgHamburger from './SvgHamburger.vue';
 
 export default defineComponent({
   name: 'NavHeader',
+  components: { SvgHamburger },
   setup() {
     const router = useRouter();
     const routes = router.getRoutes();
@@ -62,13 +122,13 @@ export default defineComponent({
           caption: r.meta.nav.caption,
         };
       });
+    console.log(items);
 
+    const showMenu = ref(false);
     return {
-      showMenu: true,
+      showMenu,
       items,
     };
   },
 });
 </script>
-
-<style lang="scss"></style>

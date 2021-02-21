@@ -20,6 +20,11 @@ const routes: RouteRecordRaw = {
       name: 'projects',
       component: () => import(/* webpackChunkName: "Projects" */ './Projects.vue'),
     },
+    {
+      path: 'products',
+      name: 'products',
+      component: () => import(/* webpackChunkName: "Projects" */ './products/Products.vue'),
+    },
   ],
 };
 

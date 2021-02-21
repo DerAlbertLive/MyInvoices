@@ -21,7 +21,7 @@ namespace Invoices.Core.Data
             ProductPrices = Set<ProductPrice>();
             Units = Set<UnitOfQuantity>();
             Projects = Set<Project>();
-            ProjectPrices = Set<ProjectPrice>();
+            ProjectPrices = Set<ProjectRate>();
         }
 
         public DbSet<UnitOfQuantity> Units { get; set; }
@@ -37,7 +37,7 @@ namespace Invoices.Core.Data
 
         public DbSet<Vat> Vats { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectPrice> ProjectPrices { get; }
+        public DbSet<ProjectRate> ProjectPrices { get; }
 
         /// <summary>
         /// Synchronous SaveChanges is not allowed for this application, go all async

@@ -128,7 +128,7 @@ namespace Invoices.Core.Data
 
         public static void OwnsOneShortDescription<T>(
             this EntityTypeBuilder<T> builder,
-            Expression<Func<T, ShortDescription>> navigationExpression,
+            Expression<Func<T, Designation>> navigationExpression,
             string? columnName = null) where T : class
         {
             if (columnName == null)

@@ -2,16 +2,16 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class ProjectPrice : Entity<ProjectPriceId>
+    public class ProjectRate : Entity<ProjectRateId>
     {
-        protected ProjectPrice()
+        protected ProjectRate()
         {
             Price = Money.None;
             ProductPriceId = ProductPriceId.None;
             ProjectId = ProjectId.None;
         }
 
-        public ProjectPrice(Money price, ProductPriceId productPriceId, ProjectId projectId, bool inactive) : this()
+        public ProjectRate(Money price, ProductPriceId productPriceId, ProjectId projectId, bool inactive) : this()
         {
             Price = price;
             ProductPriceId = productPriceId;

@@ -2,7 +2,12 @@
   <div>
     <h2>Projects</h2>
     <ul role="list">
-      <li data-testid="project-list" v-for="(project, index) in projects" :key="index">
+      <li
+        role="listitem"
+        data-testid="project-list"
+        v-for="(project, index) in projects"
+        :key="index"
+      >
         {{ project }}
       </li>
     </ul>

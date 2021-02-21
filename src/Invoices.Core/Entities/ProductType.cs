@@ -6,14 +6,14 @@ namespace Invoices.Core.Entities
     {
         protected ProductType()
         {
-            Description = ShortDescription.None;
+            Designation = Designation.None;
         }
 
-        public ProductType(ShortDescription description)
+        public ProductType(Designation designation)
         {
-            Description = description;
+            Designation = designation;
         }
 
-        public ShortDescription Description { get; set; }
+        public Designation Designation { get; set; }
     }
 }

@@ -6,21 +6,21 @@ namespace Invoices.Core.Entities
     {
         protected UnitOfQuantity()
         {
-            Description = ShortDescription.None;
+            Designation = Designation.None;
             IsoCode = string.Empty;
-            Short = string.Empty;
+            Abbreviation = string.Empty;
         }
 
-        public UnitOfQuantity(string isoCode, string @short, ShortDescription description) : this()
+        public UnitOfQuantity(string isoCode, string abbreviation, Designation designation) : this()
         {
             IsoCode = isoCode;
-            Short = @short;
-            Description = description;
+            Abbreviation = abbreviation;
+            Designation = designation;
         }
 
         public string IsoCode { get; set; }
-        public string Short { get; set; }
+        public string Abbreviation { get; set; }
 
-        public ShortDescription Description { get; set; }
+        public Designation Designation { get; set; }
     }
 }

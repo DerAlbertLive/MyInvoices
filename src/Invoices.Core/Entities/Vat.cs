@@ -7,23 +7,23 @@ namespace Invoices.Core.Entities
         protected Vat()
         {
             Percent = Percent.None;
-            Description = ShortDescription.None;
+            Designation = Designation.None;
         }
 
-        public Vat(Percent percent, ShortDescription description) : this()
+        public Vat(Percent percent, Designation designation) : this()
         {
             Percent = percent;
-            Description = description;
+            Designation = designation;
         }
 
-        public ShortDescription Description { get; set; }
+        public Designation Designation { get; set; }
 
         public Percent Percent { get; set; }
         public bool Inactive { get; set; }
 
-        public void ChangeDescription(ShortDescription shortDescription)
+        public void ChangeDescription(Designation designation)
         {
-            Description = shortDescription;
+            Designation = designation;
         }
     }
 }

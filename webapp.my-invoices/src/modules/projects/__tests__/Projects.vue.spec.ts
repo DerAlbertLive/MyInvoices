@@ -6,20 +6,20 @@ import stores from '@/store';
 
 describe('projects', () => {
   it('adds the text', async () => {
-    const component = render(Projects, {
+    const { getByRole, getAllByRole } = render(Projects, {
       global: {
         plugins: [stores],
       },
     });
 
-    const input = component.getByRole('textbox') as HTMLInputElement;
-    const button = component.getByRole('button');
+    const input = getByRole('textbox') as HTMLInputElement;
+    const button = getByRole('button');
 
     await fireEvent.update(input, 'Hello');
 
     await fireEvent.click(button);
 
-    const result = component.container.querySelectorAll('li');
+    const result = getAllByRole('listitem');
 
     expect(result.length).toBe(3);
     expect(result[2].textContent).toBe('Hello');

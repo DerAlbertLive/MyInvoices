@@ -8,21 +8,22 @@ namespace Invoices.Core.Entities
     {
         protected Product()
         {
-            Description = ShortDescription.None;
+            Designation = Designation.None;
             UnitOfQuantityId = UnitOfQuantityId.None;
             ProductTypeId = ProductTypeId.None;
+            Inactive = false;
         }
 
-        public Product([NotNull] ShortDescription description, UnitOfQuantityId unitOfQuantityId, ProductTypeId productTypeId,
+        public Product([NotNull] Designation description, UnitOfQuantityId unitOfQuantityId, ProductTypeId productTypeId,
             bool inactive) : this()
         {
-            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Designation = description ?? throw new ArgumentNullException(nameof(description));
             UnitOfQuantityId = unitOfQuantityId;
             ProductTypeId = productTypeId;
             Inactive = inactive;
         }
 
-        public ShortDescription Description { get; set; }
+        public Designation Designation { get; set; }
         public UnitOfQuantityId UnitOfQuantityId { get; set; }
         public ProductTypeId ProductTypeId { get; set; }
 

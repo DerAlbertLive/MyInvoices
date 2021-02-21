@@ -23,7 +23,7 @@ namespace Invoices.Core.Tests.Repositories
         public async Task User_can_be_stored_and_loaded()
         {
             var user = new User(new PersonName("Ferris", "M", "Bueller"), new EMail("info@der-albert.com"));
-            using (var dbContext = GetNewDbContext())
+            await using (var dbContext = GetNewDbContext(_outputHelper))
             {
                 dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
@@ -31,12 +31,9 @@ namespace Invoices.Core.Tests.Repositories
 
             var db = GetNewDbContext();
 
-            UserId userId = user.Id;
+            var userId = user.Id;
             var query = db.Users.Where(u => u.Id == userId);
 
-           _outputHelper.WriteLine(query.ToQueryString());
-
-           var sql = query.ToQueryString();
             var result = await query.SingleAsync();
 
             result.Should().NotBeSameAs(user);
@@ -56,7 +53,7 @@ namespace Invoices.Core.Tests.Repositories
             var customer = new Customer(new CompanyName("Reinland Seifen", "Line2"),
                 new PersonName("Jutta", string.Empty, "Westphal"));
 
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
                 storeContext.Customers.Add(customer);
                 await storeContext.SaveChangesAsync();
@@ -78,7 +75,7 @@ namespace Invoices.Core.Tests.Repositories
         {
             var company = new Customer(new CompanyName("Reinland Seifen", "Line2"),
                 new PersonName("Jutta", string.Empty, "Westphal"));
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
                 storeContext.Customers.Add(company);
                 await storeContext.SaveChangesAsync();
@@ -106,15 +103,15 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task Product_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var unit = new UnitOfQuantity("M", "m", new ShortDescription("minuten"));
-                var productType = new ProductType(new ShortDescription("Dinge"));
+                var unit = new UnitOfQuantity("M", "m", new Designation("minuten"));
+                var productType = new ProductType(new Designation("Dinge"));
                 storeContext.Units.AddRange(unit);
                 storeContext.ProductTypes.AddRange(productType);
                 await storeContext.SaveChangesAsync();
 
-                var product = new Product(new ShortDescription("Hello"), unit.Id, productType.Id, true);
+                var product = new Product(new Designation("Hello"), unit.Id, productType.Id, true);
                 storeContext.Products.Add(product);
                 await storeContext.SaveChangesAsync();
             }
@@ -122,10 +119,10 @@ namespace Invoices.Core.Tests.Repositories
             var db = GetNewDbContext();
 
             var query = from c in db.Products
-                where c.Description.Value == "Hello"
+                where c.Designation.Value == "Hello"
                 select new
                 {
-                    c.Description.Value
+                    c.Designation.Value
                 };
 
             var result = await query.SingleOrDefaultAsync();
@@ -136,9 +133,9 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task UnitOfQuantity_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var unit = new UnitOfQuantity("M", "m", new ShortDescription("minuten"));
+                var unit = new UnitOfQuantity("M", "m", new Designation("minuten"));
                 storeContext.Units.AddRange(unit);
                 await storeContext.SaveChangesAsync();
             }
@@ -146,12 +143,12 @@ namespace Invoices.Core.Tests.Repositories
             var db = GetNewDbContext();
 
             var query = from c in db.Units
-                where c.Description.Value == "minuten"
+                where c.Designation.Value == "minuten"
                 select new
                 {
                     c.IsoCode,
-                    c.Short,
-                    c.Description.Value
+                    Short = c.Abbreviation,
+                    c.Designation.Value
                 };
 
             var result = await query.SingleOrDefaultAsync();
@@ -164,9 +161,9 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task ProductType_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var productType = new ProductType(new ShortDescription("Dings"));
+                var productType = new ProductType(new Designation("Dings"));
                 storeContext.ProductTypes.AddRange(productType);
                 await storeContext.SaveChangesAsync();
             }
@@ -174,10 +171,10 @@ namespace Invoices.Core.Tests.Repositories
             var db = GetNewDbContext();
 
             var query = from c in db.ProductTypes
-                where c.Description.Value == "Dings"
+                where c.Designation.Value == "Dings"
                 select new
                 {
-                    c.Description.Value
+                    c.Designation.Value
                 };
 
             var result = await query.SingleOrDefaultAsync();
@@ -188,26 +185,26 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task ProductPrice_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var unit = new UnitOfQuantity("M", "m", new ShortDescription("minuten"));
-                var productType = new ProductType(new ShortDescription("Dinge"));
+                var unit = new UnitOfQuantity("M", "m", new Designation("minuten"));
+                var productType = new ProductType(new Designation("Dinge"));
                 storeContext.Units.AddRange(unit);
                 await storeContext.SaveChangesAsync();
 
                 storeContext.ProductTypes.AddRange(productType);
 
                 await storeContext.SaveChangesAsync();
-                var product = new Product(new ShortDescription("Hello"), unit.Id, productType.Id, true);
+                var product = new Product(new Designation("Hello"), unit.Id, productType.Id, true);
                 storeContext.Products.Add(product);
                 await storeContext.SaveChangesAsync();
 
-                var vat = new Vat(new Percent(16.0m), new ShortDescription("Standard"));
+                var vat = new Vat(new Percent(16.0m), new Designation("Standard"));
                 storeContext.Vats.AddRange(vat);
                 await storeContext.SaveChangesAsync();
 
 
-                var rate = new ProductPrice(new ShortDescription("PR"), new Money("EUR", 50.0m), vat.Id, product.Id,
+                var rate = new ProductPrice(new Money("EUR", 50.0m), vat.Id, product.Id,
                     false);
 
                 storeContext.ProductPrices.AddRange(rate);
@@ -216,17 +213,16 @@ namespace Invoices.Core.Tests.Repositories
 
             var db = GetNewDbContext();
             var query = from pr in db.ProductPrices
-                where pr.Description.Value == "PR"
+                where pr.Price.Amount == 50.0m
                 select new
                 {
-                    pr.Description.Value,
                     pr.Price.Amount,
                     pr.Price.Currency,
+                    pr.ProductId,
                 };
 
             var result = await query.SingleOrDefaultAsync();
 
-            result.Value.Should().Be("PR");
             result.Amount.Should().Be(50.0m);
             result.Currency.Should().Be("EUR");
         }
@@ -234,9 +230,9 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task Vat_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var vat = new Vat(new Percent(16.0m), new ShortDescription("V"));
+                var vat = new Vat(new Percent(16.0m), new Designation("V"));
                 storeContext.Vats.AddRange(vat);
                 await storeContext.SaveChangesAsync();
             }
@@ -244,11 +240,11 @@ namespace Invoices.Core.Tests.Repositories
             var db = GetNewDbContext();
 
             var query = from c in db.Vats
-                where c.Description.Value == "V"
+                where c.Designation.Value == "V"
                 select new
                 {
                     Percent = c.Percent.Value,
-                    Description = c.Description.Value
+                    Description = c.Designation.Value
                 };
 
             var result = await query.SingleOrDefaultAsync();
@@ -260,9 +256,9 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task Project_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var project = new Project(new ShortDescription("PRJ1"), DateTimeOffset.Now,
+                var project = new Project(new Designation("PRJ1"), DateTimeOffset.Now,
                     DateTimeOffset.Now.AddDays(10));
                 storeContext.Projects.AddRange(project);
                 await storeContext.SaveChangesAsync();
@@ -270,10 +266,10 @@ namespace Invoices.Core.Tests.Repositories
 
             var db = GetNewDbContext();
             var query = from p in db.Projects
-                where p.Description.Value == "PRJ1"
+                where p.Designation.Value == "PRJ1"
                 select new
                 {
-                    Description = p.Description.Value,
+                    Description = p.Designation.Value,
                     p.BeginOfProject,
                     p.EndOfProject
                 };
@@ -288,34 +284,34 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task ProjectPrice_can_be_stored_and_loaded()
         {
-            using (var storeContext = GetNewDbContext())
+            await using (var storeContext = GetNewDbContext())
             {
-                var unit = new UnitOfQuantity("M", "m", new ShortDescription("minuten"));
-                var productType = new ProductType(new ShortDescription("Dinge"));
+                var unit = new UnitOfQuantity("M", "m", new Designation("minuten"));
+                var productType = new ProductType(new Designation("Dinge"));
                 storeContext.Units.AddRange(unit);
                 storeContext.ProductTypes.AddRange(productType);
                 await storeContext.SaveChangesAsync();
-                var product = new Product(new ShortDescription("Hello"), unit.Id, productType.Id, true);
+                var product = new Product(new Designation("Hello"), unit.Id, productType.Id, true);
                 storeContext.Products.Add(product);
                 await storeContext.SaveChangesAsync();
 
-                var vat = new Vat(new Percent(16.0m), new ShortDescription("Standard"));
+                var vat = new Vat(new Percent(16.0m), new Designation("Standard"));
                 storeContext.Vats.AddRange(vat);
                 await storeContext.SaveChangesAsync();
 
-                var project = new Project(new ShortDescription("PRJ1"), DateTimeOffset.Now,
+                var project = new Project(new Designation("PRJ1"), DateTimeOffset.Now,
                     DateTimeOffset.Now.AddDays(10));
                 storeContext.Projects.AddRange(project);
                 await storeContext.SaveChangesAsync();
 
 
-                var productRate = new ProductPrice(new ShortDescription("PR"), new Money("EUR", 50.0m), vat.Id,
+                var productRate = new ProductPrice(new Money("EUR", 50.0m), vat.Id,
                     product.Id, false);
 
                 storeContext.ProductPrices.AddRange(productRate);
                 await storeContext.SaveChangesAsync();
 
-                var projectRate = new ProjectPrice(new Money("USD", 45.0m), productRate.Id, project.Id, false);
+                var projectRate = new ProjectRate(new Money("USD", 45.0m), productRate.Id, project.Id, false);
 
                 storeContext.ProjectPrices.Add(projectRate);
 
@@ -331,7 +327,6 @@ namespace Invoices.Core.Tests.Repositories
                     pp.Price.Currency
                 };
 
-        //    _outputHelper.WriteLine(query.ToQueryString());
             var result = await query.SingleOrDefaultAsync();
 
             result.Amount.Should().Be(45.0m);

@@ -7,18 +7,18 @@ namespace Invoices.Core.Entities
     {
         protected Project()
         {
-            Description = ShortDescription.None;
+            Designation = Designation.None;
         }
 
-        public Project(ShortDescription description, DateTimeOffset beginOfProject,
+        public Project(Designation designation, DateTimeOffset beginOfProject,
             DateTimeOffset endOfProject) : this()
         {
-            Description = description;
+            Designation = designation;
             BeginOfProject = beginOfProject;
             EndOfProject = endOfProject;
         }
 
-        public ShortDescription Description { get; }
+        public Designation Designation { get; }
         public DateTimeOffset BeginOfProject { get; }
         public DateTimeOffset EndOfProject { get; }
     }

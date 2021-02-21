@@ -19,7 +19,7 @@ namespace Invoices.Core.Entities
             ChangedById = UserId.None;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is Entity<T> other))
                 return false;

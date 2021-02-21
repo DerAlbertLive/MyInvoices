@@ -6,6 +6,7 @@ using Invoices.Core.ValueObjects;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
+using Xunit.Abstractions;
 
 namespace Invoices.Core.Tests.Repositories
 {
@@ -29,12 +30,18 @@ namespace Invoices.Core.Tests.Repositories
         /// <summary>
         /// Gets a new DbContext with the shared InMemory DbContext
         /// </summary>
+        /// <param name="testOutputHelper"></param>
         /// <returns></returns>
-        protected InvoicesDbContext GetNewDbContext()
+        protected InvoicesDbContext GetNewDbContext(ITestOutputHelper testOutputHelper = null!)
         {
             var optionsBuilder = new DbContextOptionsBuilder<InvoicesDbContext>().UseSqlite(_dbConnection);
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.EnableDetailedErrors();
+            if (testOutputHelper != null)
+            {
+                optionsBuilder.LogTo(message => testOutputHelper.WriteLine(message));
+            }
+
             var options = optionsBuilder.Options;
             var dbContext = new InvoicesDbContext(options, UserIdAccessor);
             if (dbContext.Database.EnsureCreated())

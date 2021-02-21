@@ -24,7 +24,7 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat(new Percent(16.0m), new ShortDescription("CreatedVat"));
+            var vat = new Vat(new Percent(16.0m), new Designation("CreatedVat"));
 
             dbContext.Vats.Add(vat);
 
@@ -43,7 +43,7 @@ namespace Invoices.Core.Tests.Repositories
 
             UserIdAccessor.UserId.Returns(UserId1);
 
-            var vat = new Vat(new Percent(16.0m),  new ShortDescription("CreatedVat"));
+            var vat = new Vat(new Percent(16.0m),  new Designation("CreatedVat"));
 
             dbContext.Vats.Add(vat);
 
@@ -60,7 +60,7 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat(new Percent(16.0m), new ShortDescription("CreatedAt"));
+            var vat = new Vat(new Percent(16.0m), new Designation("CreatedAt"));
 
             dbContext.Vats.Add(vat);
 
@@ -68,7 +68,7 @@ namespace Invoices.Core.Tests.Repositories
 
             await Task.Delay(200);
 
-            vat.ChangeDescription(new ShortDescription("ChangedAt"));
+            vat.ChangeDescription(new Designation("ChangedAt"));
 
             var count = await dbContext.SaveChangesAsync();
 
@@ -84,19 +84,19 @@ namespace Invoices.Core.Tests.Repositories
         {
             var dbContext = GetNewDbContext();
 
-            var vat = new Vat(new Percent(16.0m), new ShortDescription("CreatedAt"));
+            var vat = new Vat(new Percent(16.0m), new Designation("CreatedAt"));
 
             dbContext.Vats.Add(vat);
 
             await dbContext.SaveChangesAsync();
 
-            vat.ChangeDescription(new ShortDescription("ChangedAt"));
+            vat.ChangeDescription(new Designation("ChangedAt"));
 
             UserIdAccessor.UserId.Returns(UserId2);
 
             await dbContext.SaveChangesAsync();
 
-            var result = await dbContext.Vats.SingleAsync(v => v.Description.Value == "ChangedAt");
+            var result = await dbContext.Vats.SingleAsync(v => v.Designation.Value == "ChangedAt");
 
             result.CreatedById.Should().Be(UserId1);
             result.ChangedById.Should().Be(UserId2);

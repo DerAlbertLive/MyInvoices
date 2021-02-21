@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw = {
-  path: '/timekeeping',
+  path: '/time-keeping',
   name: 'timeKeepingContainer',
   redirect: 'time-keeping',
   components: {
