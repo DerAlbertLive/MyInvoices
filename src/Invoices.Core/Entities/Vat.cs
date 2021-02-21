@@ -8,6 +8,7 @@ namespace Invoices.Core.Entities
         {
             Percent = Percent.None;
             Designation = Designation.None;
+            Inactive = false;
         }
 
         public Vat(Percent percent, Designation designation) : this()
@@ -16,8 +17,7 @@ namespace Invoices.Core.Entities
             Designation = designation;
         }
 
-        public Designation Designation { get; set; }
-
+        public Designation Designation { get; private set; }
         public Percent Percent { get; set; }
         public bool Inactive { get; set; }
 

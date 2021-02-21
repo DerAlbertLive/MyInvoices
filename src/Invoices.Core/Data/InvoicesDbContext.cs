@@ -54,7 +54,7 @@ namespace Invoices.Core.Data
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
         {
-            DbContextContextExtensions.UpdateBaseEntityProperties(this, _userIdAccessor);
+            this.UpdateBaseEntityProperties(_userIdAccessor);
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }

@@ -43,7 +43,7 @@ namespace Invoices.Core.Tests.Repositories
 
             UserIdAccessor.UserId.Returns(UserId1);
 
-            var vat = new Vat(new Percent(16.0m),  new Designation("CreatedVat"));
+            var vat = new Vat(new Percent(16.0m), new Designation("CreatedVat"));
 
             dbContext.Vats.Add(vat);
 
@@ -58,25 +58,40 @@ namespace Invoices.Core.Tests.Repositories
         [Fact]
         public async Task SaveChangesAsync_should_set_changedAt_on_modified_entity()
         {
-            var dbContext = GetNewDbContext();
+            Vat vat;
+            await using (var dbContext = GetNewDbContext())
+            {
+                vat = new Vat(new Percent(16.0m), new Designation("CreatedAt"));
 
-            var vat = new Vat(new Percent(16.0m), new Designation("CreatedAt"));
+                dbContext.Vats.Add(vat);
 
-            dbContext.Vats.Add(vat);
+                await dbContext.SaveChangesAsync();
+            }
 
-            await dbContext.SaveChangesAsync();
 
-            await Task.Delay(200);
+            await using (var dbContext = GetNewDbContext())
+            {
+                vat = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
 
-            vat.ChangeDescription(new Designation("ChangedAt"));
+                vat.ChangeDescription(new Designation("ChangedAt"));
 
-            var count = await dbContext.SaveChangesAsync();
+                var count = await dbContext.SaveChangesAsync();
 
-            var result = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
+                count.Should().Be(1);
+            }
 
-            result.ChangedAt.Should().NotBe(result.CreatedAt);
+            await using (var dbContext = GetNewDbContext())
+            {
+                var result  = await dbContext.Vats.SingleAsync(v => v.Id == vat.Id);
 
-            result.ChangedAt.Should().BeCloseTo(DateTime.UtcNow, precision: 1000);
+                result.Designation.Should().Be(new Designation("ChangedAt"));
+
+                result.ChangedAt.Should().NotBe(result.CreatedAt);
+
+
+                result.ChangedAt.Should().BeCloseTo(DateTime.UtcNow, precision: 1000);
+            }
+
         }
 
         [Fact]
@@ -100,7 +115,6 @@ namespace Invoices.Core.Tests.Repositories
 
             result.CreatedById.Should().Be(UserId1);
             result.ChangedById.Should().Be(UserId2);
-
         }
     }
 }

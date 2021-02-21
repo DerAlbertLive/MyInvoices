@@ -11,6 +11,8 @@ namespace Invoices.Core.Entities
             Abbreviation = string.Empty;
         }
 
+        public string IsoCode { get; set; }
+
         public UnitOfQuantity(string isoCode, string abbreviation, Designation designation) : this()
         {
             IsoCode = isoCode;
@@ -18,7 +20,6 @@ namespace Invoices.Core.Entities
             Designation = designation;
         }
 
-        public string IsoCode { get; set; }
         public string Abbreviation { get; set; }
 
         public Designation Designation { get; set; }

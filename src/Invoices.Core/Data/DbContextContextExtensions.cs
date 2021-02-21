@@ -11,10 +11,12 @@ namespace Invoices.Core.Data
         static bool IsAddedOrModified(EntityEntry entry) =>
             // Filters for Added or Modified Entities, also looks for updated Owned ValueObjects
             // based on https://stackoverflow.com/questions/51416721/ef-core-owned-property-state-propagation-to-parent-entity
+            // C# 9 record types appears in references, and are always added, because they are new instances on each changed
             entry.State == EntityState.Added ||
             entry.State == EntityState.Modified ||
             entry.References.Any(r =>
                 r.TargetEntry != null && r.TargetEntry.Metadata.IsOwned() && IsAddedOrModified(r.TargetEntry));
+
 
         public static void UpdateBaseEntityProperties(this DbContext dbContext,
             ICurrentUserIdAccessor currentUserIdAccessor)
@@ -23,14 +25,14 @@ namespace Invoices.Core.Data
 
             foreach (var entry in entries)
             {
-                if (entry.Entity is IEntityChangedAt timeEntity)
+                switch (entry.Entity)
                 {
-                    UpdateChangeTime(timeEntity, entry);
-                }
-
-                if (entry.Entity is IEntityChangedBy userEntity)
-                {
-                    UpdateChangeUser(userEntity, entry, currentUserIdAccessor);
+                    case IEntityChangedBy userEntity:
+                        UpdateChangeUser(userEntity, entry, currentUserIdAccessor);
+                        break;
+                    case IEntityChanged timeEntity:
+                        UpdateChangeTime(timeEntity, entry);
+                        break;
                 }
             }
         }
@@ -40,25 +42,24 @@ namespace Invoices.Core.Data
         {
             if (entityEntry.State == EntityState.Added)
             {
-                entity.CreatedById = currentUserIdAccessor.UserId;
-                entity.ChangedById = entity.CreatedById;
+                entity.Created(currentUserIdAccessor.UserId);
+
             }
-            else if (entity.ChangedById != UserId.None)
+            else if (IsAddedOrModified(entityEntry))
             {
-                entity.ChangedById = currentUserIdAccessor.UserId;
+                entity.Changed(currentUserIdAccessor.UserId);
             }
         }
 
-        static void UpdateChangeTime(IEntityChangedAt entity, EntityEntry entityEntry)
+        static void UpdateChangeTime(IEntityChanged entity, EntityEntry entityEntry)
         {
             if (entityEntry.State == EntityState.Added)
             {
-                entity.CreatedAt = DateTime.UtcNow;
-                entity.ChangedAt = entity.CreatedAt;
+                entity.Created();
             }
-            else if (entity.ChangedAt != DateTime.MinValue)
+            else if (IsAddedOrModified(entityEntry))
             {
-                entity.ChangedAt = DateTime.UtcNow;
+                entity.Changed();
             }
         }
     }

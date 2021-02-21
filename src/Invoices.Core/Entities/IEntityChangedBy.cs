@@ -2,7 +2,13 @@ namespace Invoices.Core.Entities
 {
     public interface IEntityChangedBy
     {
-        UserId CreatedById { get; set; }
-        UserId ChangedById { get; set; }
+        void Created(UserId userId);
+        void Changed(UserId userId);
+    }
+
+    public interface IEntityChangedByIdentifier : IEntityChangedBy
+    {
+        UserId CreatedById { get; }
+        UserId ChangedById { get; }
     }
 }

@@ -134,20 +134,23 @@ namespace Invoices.Core.Data
             builder.OwnsOneShortDescription(p => p.Designation);
         }
 
-        void BuildEntity<T>(EntityTypeBuilder<T> builder) where T : class, IEntityChangedBy
+        void BuildEntity<T>(EntityTypeBuilder<T> builder) where T : class, IEntityChangedByIdentifier
         {
             builder.HasKey("Id");
 
             builder.Property(e => e.ChangedById).HasConversion(p => p.Id, p => new UserId(p));
             builder.Property(e => e.CreatedById).HasConversion(p => p.Id, p => new UserId(p));
 
-            builder.HasOne(typeof(User))
-                .WithMany()
-                .HasForeignKey(nameof(IEntityChangedBy.ChangedById));
+            // builder.HasOne(e => e.ChangedById);
+            // builder.HasOne(e => e.CreatedById);
 
-            builder.HasOne(typeof(User))
-                .WithMany()
-                .HasForeignKey(nameof(IEntityChangedBy.CreatedById));
+            // builder.HasOne(typeof(User))
+            //     .WithMany()
+            //     .HasForeignKey(nameof(IEntityChangedByIdentifier.ChangedById));
+            //
+            // builder.HasOne(typeof(User))
+            //     .WithMany()
+            //     .HasForeignKey(nameof(IEntityChangedByIdentifier.CreatedById));
         }
     }
 }

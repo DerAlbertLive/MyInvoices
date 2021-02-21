@@ -90,6 +90,8 @@ namespace Invoices.Core.Data
             Expression<Func<T, Money>> navigationExpression,
             string? prefix = null) where T : class
         {
+            var converter = new CurrencyValueConverter();
+
             if (prefix == null)
             {
                 prefix = GetNavigationName(navigationExpression);
@@ -103,6 +105,7 @@ namespace Invoices.Core.Data
                 p.Property(pp => pp.Currency)
                     .IsRequired()
                     .HasMaxLength(3)
+                    .HasConversion(converter)
                     .HasColumnName($"{prefix}_{nameof(Money.Currency)}");
             });
         }
@@ -176,7 +179,7 @@ namespace Invoices.Core.Data
         public static PropertyBuilder<T> WithCustomKeyType<T>(this PropertyBuilder<T> builder)
             where T : EntityId<T>
         {
-            builder.HasConversion(new EntityIdValueConversion<T>())
+            builder.HasConversion(new EntityIdValueConverter<T>())
                 .Metadata.SetValueComparer(new EntityIdValueComparer<T>());
             return builder;
         }

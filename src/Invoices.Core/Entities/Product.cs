@@ -14,7 +14,8 @@ namespace Invoices.Core.Entities
             Inactive = false;
         }
 
-        public Product([NotNull] Designation description, UnitOfQuantityId unitOfQuantityId, ProductTypeId productTypeId,
+        public Product([NotNull] Designation description, UnitOfQuantityId unitOfQuantityId,
+            ProductTypeId productTypeId,
             bool inactive) : this()
         {
             Designation = description ?? throw new ArgumentNullException(nameof(description));
@@ -23,10 +24,10 @@ namespace Invoices.Core.Entities
             Inactive = inactive;
         }
 
-        public Designation Designation { get; set; }
-        public UnitOfQuantityId UnitOfQuantityId { get; set; }
-        public ProductTypeId ProductTypeId { get; set; }
+        public Designation Designation { get; }
+        public UnitOfQuantityId UnitOfQuantityId { get; }
+        public ProductTypeId ProductTypeId { get; }
 
-        public bool Inactive { get; set; }
+        public bool Inactive { get; }
     }
 }

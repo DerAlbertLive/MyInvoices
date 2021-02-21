@@ -6,7 +6,7 @@ namespace Invoices.Core.Entities
     {
         protected Customer()
         {
-            Name = CompanyName.Empty;
+            Name = CompanyName.None;
             ContactName = PersonName.None;
             MainAddress = Address.None;
         }
@@ -18,8 +18,7 @@ namespace Invoices.Core.Entities
         }
 
         public CompanyName Name { get; }
-        public PersonName ContactName { get; set; }
-
-        public Address MainAddress { get; set; }
+        public PersonName ContactName { get; }
+        public Address MainAddress { get; }
     }
 }

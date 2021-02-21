@@ -19,9 +19,9 @@ namespace Invoices.Core.Entities
             Inactive = inactive;
         }
 
-        public ProductPriceId ProductPriceId { get; set; }
-        public ProjectId ProjectId { get; set; }
-        public Money Price { get; set; }
-        public bool Inactive { get; set; }
+        public ProductPriceId ProductPriceId { get; }
+        public ProjectId ProjectId { get; }
+        public Money Price { get; private set; }
+        public bool Inactive { get; }
     }
 }

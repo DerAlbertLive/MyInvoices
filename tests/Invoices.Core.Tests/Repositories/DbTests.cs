@@ -12,12 +12,12 @@ namespace Invoices.Core.Tests.Repositories
 {
     public abstract class DbTests : IDisposable
     {
-        DbConnection _dbConnection;
+        readonly DbConnection _dbConnection;
 
         protected UserId UserId1 = UserId.None;
         protected UserId UserId2 = UserId.None;
 
-        public DbTests()
+        protected DbTests()
         {
             _dbConnection = new SqliteConnection("datasource=:memory:");
             _dbConnection.Open();

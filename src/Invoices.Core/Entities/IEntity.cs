@@ -1,6 +1,6 @@
 namespace Invoices.Core.Entities
 {
-    public interface IEntity<T> : IEntityChangedBy, IEntityChangedAt
+    public interface IEntity<T> : IEntityChangedByIdentifier
     {
 
     }

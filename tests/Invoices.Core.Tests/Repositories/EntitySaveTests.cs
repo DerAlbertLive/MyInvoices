@@ -204,7 +204,7 @@ namespace Invoices.Core.Tests.Repositories
                 await storeContext.SaveChangesAsync();
 
 
-                var rate = new ProductPrice(new Money("EUR", 50.0m), vat.Id, product.Id,
+                var rate = new ProductPrice(new Money(Currencies.Euro, 50.0m), vat.Id, product.Id,
                     false);
 
                 storeContext.ProductPrices.AddRange(rate);
@@ -224,7 +224,7 @@ namespace Invoices.Core.Tests.Repositories
             var result = await query.SingleOrDefaultAsync();
 
             result.Amount.Should().Be(50.0m);
-            result.Currency.Should().Be("EUR");
+            result.Currency.Should().Be(Currencies.Euro);
         }
 
         [Fact]
@@ -305,13 +305,13 @@ namespace Invoices.Core.Tests.Repositories
                 await storeContext.SaveChangesAsync();
 
 
-                var productRate = new ProductPrice(new Money("EUR", 50.0m), vat.Id,
+                var productRate = new ProductPrice(new Money(Currencies.Euro, 50.0m), vat.Id,
                     product.Id, false);
 
                 storeContext.ProductPrices.AddRange(productRate);
                 await storeContext.SaveChangesAsync();
 
-                var projectRate = new ProjectRate(new Money("USD", 45.0m), productRate.Id, project.Id, false);
+                var projectRate = new ProjectRate(new Money(Currencies.UsDollar, 45.0m), productRate.Id, project.Id, false);
 
                 storeContext.ProjectPrices.Add(projectRate);
 
@@ -330,7 +330,7 @@ namespace Invoices.Core.Tests.Repositories
             var result = await query.SingleOrDefaultAsync();
 
             result.Amount.Should().Be(45.0m);
-            result.Currency.Should().Be("USD");
+            result.Currency.Should().Be(Currencies.UsDollar);
         }
     }
 }

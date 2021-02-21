@@ -2,9 +2,9 @@ using System;
 
 namespace Invoices.Core.Entities
 {
-    public interface IEntityChangedAt
+    public interface IEntityChanged
     {
-        DateTime CreatedAt { get; set; }
-        DateTime ChangedAt { get; set; }
+        void Created();
+        void Changed();
     }
 }

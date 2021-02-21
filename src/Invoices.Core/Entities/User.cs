@@ -3,17 +3,29 @@ using Invoices.Core.ValueObjects;
 
 namespace Invoices.Core.Entities
 {
-    public class User : IEntityChangedAt
+    public class User : IEntityChanged
     {
         public UserId Id { get; }
 
-        public PersonName Name { get; }
+        public PersonName Name { get; private set; }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime ChangedAt { get; set; }
-        public EMail EMail { get; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime ChangedAt { get; private set; }
 
-        public bool Locked { get; set; }
+        public void Created()
+        {
+            CreatedAt = DateTime.UtcNow;
+            ChangedAt = DateTime.MinValue;
+        }
+
+        public void Changed()
+        {
+            ChangedAt = DateTime.UtcNow;
+        }
+
+        public EMail EMail { get; private set; }
+
+        public bool Locked { get; private set; }
 
         protected User()
         {
