@@ -3,22 +3,22 @@
     <h2>Projects</h2>
     <ul role="list">
       <li
-        role="listitem"
-        data-testid="project-list"
         v-for="(project, index) in projects"
         :key="index"
+        data-testid="project-list"
+        role="listitem"
       >
         {{ project }}
       </li>
     </ul>
     <label class="block">
-      Project:
-      <input v-model="newProject" type="text" />
+      Project2:
+      <input v-model="newProject" type="text">
     </label>
     <button
-      @click="add"
       type="button"
       class="bg-gray-200 border border-gray-600 rounded p-2 hover:bg-gray-100"
+      @click="add"
     >
       Add
     </button>

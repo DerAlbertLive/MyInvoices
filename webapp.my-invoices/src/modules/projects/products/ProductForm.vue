@@ -9,13 +9,13 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ProductForm',
-  emits: ['submitted'],
   props: {
     buttonText: {
       type: String,
       default: 'Save',
     },
   },
+  emits: ['submitted'],
   setup(props, { emit }) {
     const onSubmit = () => {
       emit('submitted');

@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="h-screen">
+  <div
+    id="app"
+    class="h-screen"
+  >
     <NavHeader />
     <div class="flex">
       <div class="w-1/5 lg:w-1/6 bg-orange-200 h-screen p-1 text-orange-800">
@@ -14,9 +17,9 @@
 </template>
 
 <script lang="ts">
-import NavHeader from './components/NavHeader.vue';
-import Sidebar from '@/components/Sidebar.vue';
-import Debug from './components/DebugLayout.vue';
+import NavHeader from './components/page/NavHeader.vue';
+import Sidebar from './components/page/Sidebar.vue';
+import Debug from './components/page/DebugLayout.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

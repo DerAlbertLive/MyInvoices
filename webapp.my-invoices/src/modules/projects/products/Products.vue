@@ -1,7 +1,7 @@
 <template>
   <div>Products</div>
-  <product-list :products="products"></product-list>
-  <product-form button-text="Neu"></product-form>
+  <product-list :products="products" />
+  <product-form button-text="Neu" />
 </template>
 
 <script lang="ts">

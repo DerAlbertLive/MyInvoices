@@ -1,11 +1,12 @@
 <template>
   <div>
-    <router-view name="sidebar"></router-view>
+    <router-view name="sidebar" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
   name: 'SidebarNavigation',
   data() {

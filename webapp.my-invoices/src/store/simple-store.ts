@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCurrentInstance, inject, InjectionKey, reactive, readonly } from 'vue';
 
 // based on https://medium.com/@mario.brendel1990/vue-3-the-new-store-a7569d4a546f
@@ -24,14 +23,14 @@ function getStoreSymbol<T>(description: string): InjectionKey<T> {
   return Symbol.for(`SimpleStoreKey_${description}`);
 }
 
-export function storeFactory<T extends SimpleStore<any>>(key: string, factory: () => T): T {
+export function storeFactory<T extends SimpleStore<Record<string, unknown>>>(key: string, factory: () => T): T {
   const storeKey = getStoreSymbol<T>(key);
   return inject(
     storeKey,
     () => {
       const instance = getCurrentInstance();
       if (instance == null) {
-        throw Error(`useStoreFactory for ${key} must be used within setup`);
+        throw Error(`storeFactory() for ${key} must be used within setup`);
       }
       const provides = instance.appContext.provides;
       const s = factory();
