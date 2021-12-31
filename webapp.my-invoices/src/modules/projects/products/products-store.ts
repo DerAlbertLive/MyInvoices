@@ -1,4 +1,4 @@
-import { SimpleStore, useStoreFactory } from '../../../store/simple-store';
+import { SimpleStore, storeFactory } from '../../../store/simple-store';
 import { Product } from '../types';
 
 type ProductsState = {
@@ -20,5 +20,5 @@ class ProductsStore extends SimpleStore<ProductsState> {
 const defaultKey = 'Products';
 
 export function useProductsStore(): ProductsStore {
-  return useStoreFactory(defaultKey, () => new ProductsStore());
+  return storeFactory(defaultKey, () => new ProductsStore());
 }

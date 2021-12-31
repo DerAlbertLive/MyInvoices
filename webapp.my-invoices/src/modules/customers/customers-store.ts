@@ -1,4 +1,4 @@
-import { SimpleStore, useStoreFactory } from '../../store/simple-store';
+import { SimpleStore, storeFactory } from '../../store/simple-store';
 
 type Customer = {
   name: string;
@@ -18,5 +18,5 @@ class CustomersStore extends SimpleStore<CustomersState> {
 const defaultKey = 'Customers';
 
 export function useCustomersStore(): CustomersStore {
-  return useStoreFactory(defaultKey, () => new CustomersStore());
+  return storeFactory(defaultKey, () => new CustomersStore());
 }

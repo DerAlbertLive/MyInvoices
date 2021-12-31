@@ -1,4 +1,4 @@
-import { SimpleStore, useStoreFactory } from './simple-store';
+import { SimpleStore, storeFactory } from './simple-store';
 
 type NavigationState = {
   hamburgerMenuVisible: boolean;
@@ -23,5 +23,5 @@ class NavigationStore extends SimpleStore<NavigationState> {
 const defaultKey = 'Navigation';
 
 export function useNavigationStore(): NavigationStore {
-  return useStoreFactory(defaultKey, () => new NavigationStore());
+  return storeFactory(defaultKey, () => new NavigationStore());
 }

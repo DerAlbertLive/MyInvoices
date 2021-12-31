@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCurrentInstance, inject, InjectionKey, reactive, readonly } from 'vue';
 
 // based on https://medium.com/@mario.brendel1990/vue-3-the-new-store-a7569d4a546f
@@ -23,7 +24,7 @@ function getStoreSymbol<T>(description: string): InjectionKey<T> {
   return Symbol.for(`SimpleStoreKey_${description}`);
 }
 
-export function useStoreFactory<T>(key: string, factory: () => T): T {
+export function storeFactory<T extends SimpleStore<any>>(key: string, factory: () => T): T {
   const storeKey = getStoreSymbol<T>(key);
   return inject(
     storeKey,
