@@ -122,7 +122,6 @@ export default defineComponent({
           caption: r.meta.nav?.caption ?? 'Missing Caption',
         };
       });
-    console.log(items);
 
     const showMenu = ref(false);
     return {
