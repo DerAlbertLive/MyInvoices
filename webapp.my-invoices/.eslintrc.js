@@ -8,11 +8,11 @@ module.exports = {
     'eslint:recommended',
     '@vue/typescript/recommended',
     '@vue/prettier',
-    '@vue/prettier/@typescript-eslint',
+    //    '@vue/prettier/@typescript-eslint',
   ],
   parserOptions: {
     ecmaVersion: 2020,
-    parser: '@typescript-eslint/parser'
+    parser: '@typescript-eslint/parser',
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -22,7 +22,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
+      files: ['**/__tests__/*.{j,t}s?(x)', '**/t' + 'ests/unit/**/*.spec.{j,t}s?(x)'],
       env: {
         jest: true,
       },

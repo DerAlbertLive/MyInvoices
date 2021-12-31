@@ -24,6 +24,7 @@ type InvoiceOverview = {
 };
 
 export default defineComponent({
+  name: 'InvoicesView',
   props: {
     invoices: {
       type: Array as PropType<InvoiceOverview[]>,

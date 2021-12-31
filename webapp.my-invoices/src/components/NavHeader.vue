@@ -119,7 +119,7 @@ export default defineComponent({
       .map((r) => {
         return {
           route: r.name,
-          caption: r.meta.nav.caption,
+          caption: r.meta.nav?.caption ?? 'Missing Caption',
         };
       });
     console.log(items);

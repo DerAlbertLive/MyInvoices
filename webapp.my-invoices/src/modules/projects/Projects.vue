@@ -30,7 +30,7 @@ import { computed, defineComponent, ref } from 'vue';
 import { useProjectsStore } from './projects-store';
 
 export default defineComponent({
-  name: 'Projects',
+  name: 'ProjectsView',
   setup() {
     const newProject = ref('');
     const store = useProjectsStore();

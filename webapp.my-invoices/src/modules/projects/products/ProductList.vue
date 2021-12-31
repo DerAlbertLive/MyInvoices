@@ -10,9 +10,9 @@ export default defineComponent({
   name: 'ProductList',
   props: {
     products: {
-      type: Object as PropType<Product[]>,
+      type: Array as PropType<Product[]>,
       required: true,
-      default: () => [],
+      default: (): [] => [],
     },
   },
   setup() {

@@ -16,7 +16,7 @@
 <script lang="ts">
 import NavHeader from './components/NavHeader.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import Debug from '@/components/Debug.vue';
+import Debug from './components/DebugLayout.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

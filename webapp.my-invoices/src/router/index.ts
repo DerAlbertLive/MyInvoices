@@ -5,6 +5,14 @@ import ProjectRoutes from '@/modules/projects/projects-routes';
 import InvoicesRoutes from '@/modules/invoices/invoices-routes';
 import TimeKeepingRoutes from '@/modules/timeKeeping/time-keeping-routes';
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    nav?: {
+      caption: string;
+    };
+  }
+}
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',

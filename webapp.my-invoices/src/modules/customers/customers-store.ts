@@ -2,11 +2,18 @@ import { createSimpleStoreKey, SimpleStore } from '../../store/simple-store';
 import { App } from '@vue/runtime-core';
 import { inject } from 'vue';
 
-type CustomersState = {};
+type Customer = {
+  name: string;
+};
+type CustomersState = {
+  customers: Customer[];
+};
 
 class CustomersStore extends SimpleStore<CustomersState> {
   protected data(): CustomersState {
-    return {};
+    return {
+      customers: [],
+    };
   }
 }
 

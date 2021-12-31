@@ -11,7 +11,7 @@ import ProductList from './ProductList.vue';
 import ProductForm from './ProductForm.vue';
 
 export default defineComponent({
-  name: 'Products',
+  name: 'ProductsView',
   components: { ProductList, ProductForm },
   setup() {
     const store = useProductsStore();
