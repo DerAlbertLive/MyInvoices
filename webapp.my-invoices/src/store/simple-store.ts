@@ -1,20 +1,16 @@
-import { InjectionKey, reactive, readonly } from 'vue';
+import { getCurrentInstance, inject, InjectionKey, reactive, readonly } from 'vue';
 
 // based on https://medium.com/@mario.brendel1990/vue-3-the-new-store-a7569d4a546f
 
 export abstract class SimpleStore<T extends Record<string, unknown>> {
-  protected internalState: T;
+  protected _state: T;
 
   constructor() {
-    this.internalState = reactive(this.data()) as T;
-    this.readOnlyState = readonly(this.internalState) as T;
-    this.setup();
+    this._state = reactive(this.setup()) as T;
+    this.readOnlyState = readonly(this._state) as T;
   }
 
-  protected abstract data(): T;
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setup() {}
+  protected abstract setup(): T;
 
   private readonly readOnlyState: T;
 
@@ -23,6 +19,24 @@ export abstract class SimpleStore<T extends Record<string, unknown>> {
   }
 }
 
-export function createSimpleStoreKey<T>(description: string): InjectionKey<T> {
-  return Symbol(description);
+function getStoreSymbol<T>(description: string): InjectionKey<T> {
+  return Symbol.for(`SimpleStoreKey_${description}`);
+}
+
+export function useStoreFactory<T>(key: string, factory: () => T): T {
+  const storeKey = getStoreSymbol<T>(key);
+  return inject(
+    storeKey,
+    () => {
+      const instance = getCurrentInstance();
+      if (instance == null) {
+        throw Error(`useStoreFactory for ${key} must be used within setup`);
+      }
+      const provides = instance.appContext.provides;
+      const s = factory();
+      provides[storeKey as unknown as string] = s;
+      return s;
+    },
+    true
+  );
 }

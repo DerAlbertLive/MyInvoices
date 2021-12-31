@@ -1,14 +1,12 @@
-import { render, fireEvent } from '@testing-library/vue';
+import { fireEvent, render } from '@testing-library/vue';
 
 import Projects from '../Projects.vue';
-
-import stores from '@/store';
 
 describe('projects', () => {
   it('adds the text', async () => {
     const { getByRole, getAllByRole } = render(Projects, {
       global: {
-        plugins: [stores],
+        plugins: [],
       },
     });
 

@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+    component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
     meta: {
       nav: {
         caption: 'Home',
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'about',
-    component: import(/* webpackChunkName: "home" */ '@/views/About.vue'),
+    component: () => import(/* webpackChunkName: "home" */ '@/views/About.vue'),
     meta: {
       nav: {
         caption: 'About',

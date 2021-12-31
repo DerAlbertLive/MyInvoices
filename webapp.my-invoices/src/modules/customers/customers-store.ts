@@ -1,6 +1,4 @@
-import { createSimpleStoreKey, SimpleStore } from '../../store/simple-store';
-import { App } from '@vue/runtime-core';
-import { inject } from 'vue';
+import { SimpleStore, useStoreFactory } from '../../store/simple-store';
 
 type Customer = {
   name: string;
@@ -10,20 +8,15 @@ type CustomersState = {
 };
 
 class CustomersStore extends SimpleStore<CustomersState> {
-  protected data(): CustomersState {
+  protected setup(): CustomersState {
     return {
       customers: [],
     };
   }
 }
 
-const StoreKey = createSimpleStoreKey<CustomersStore>('PCustomersStoreVuexKey');
-
-export function createCustomersStore(app: App) {
-  const store = new CustomersStore();
-  app.provide(StoreKey, store);
-}
+const defaultKey = 'Customers';
 
 export function useCustomersStore(): CustomersStore {
-  return inject(StoreKey) as CustomersStore;
+  return useStoreFactory(defaultKey, () => new CustomersStore());
 }

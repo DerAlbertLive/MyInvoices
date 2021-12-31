@@ -1,6 +1,4 @@
-import { App } from '@vue/runtime-core';
-import { createSimpleStoreKey, SimpleStore } from '../../../store/simple-store';
-import { inject } from 'vue';
+import { SimpleStore, useStoreFactory } from '../../../store/simple-store';
 import { Product } from '../types';
 
 type ProductsState = {
@@ -8,24 +6,19 @@ type ProductsState = {
 };
 
 class ProductsStore extends SimpleStore<ProductsState> {
-  protected data(): ProductsState {
+  protected setup(): ProductsState {
     return {
       products: [],
     };
   }
 
   addProduct(product: Product) {
-    this.internalState.products.push(product);
+    this._state.products.push(product);
   }
 }
 
-const ProductsStoreKey = createSimpleStoreKey<ProductsStore>('ProductsStoreKey');
-
-export function createProductsStore(app: App) {
-  const store = new ProductsStore();
-  app.provide(ProductsStoreKey, store);
-}
+const defaultKey = 'Products';
 
 export function useProductsStore(): ProductsStore {
-  return inject(ProductsStoreKey) as ProductsStore;
+  return useStoreFactory(defaultKey, () => new ProductsStore());
 }

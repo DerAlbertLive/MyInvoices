@@ -1,10 +1,11 @@
 <template>
   <section>
-    <div>
+    <div class="prose">
       <h1>Welcome to Invoices,</h1>
       <h2>the time recording and invoice management.</h2>
     </div>
-    <div class="bg-black text-white md:text-yellow">Test</div>
+    <div class="bg-black text-white md:text-yellow-500">Test</div>
+    <div class="foo">Test</div>
   </section>
 </template>
 
@@ -15,3 +16,8 @@ export default defineComponent({
   name: 'HomeView',
 });
 </script>
+<style>
+.foo {
+  @apply bg-black text-white md:text-yellow-500;
+}
+</style>

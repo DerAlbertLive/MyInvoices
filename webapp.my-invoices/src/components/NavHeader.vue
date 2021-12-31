@@ -16,7 +16,7 @@
       <div class="block sm:hidden right-0 h-full flex flex-col bg-inherit">
         <div class="">
           <button
-            @click="showMenu = !showMenu"
+            @click="toggleMenu"
             class="float-right flex items-center px-3 py-2 border rounded text-green-200 border-green-400 hover:text-white hover:border-white"
           >
             <SvgHamburger />
@@ -25,7 +25,7 @@
         <div v-if="showMenu" class="block sm:hidden bg-inherit">
           <ul class="mobile-nav">
             <li v-for="item in items" :key="item.route" class="block px-2 py-2">
-              <router-link :to="{ name: item.route }">
+              <router-link :to="{ name: item.route }" @click="hideMenu">
                 {{ item.caption }}
               </router-link>
             </li>
@@ -104,9 +104,10 @@ header::after {
 }
 </style>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import SvgHamburger from './SvgHamburger.vue';
+import { useNavigationStore } from '../store/navigation-store';
 
 export default defineComponent({
   name: 'NavHeader',
@@ -114,6 +115,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const routes = router.getRoutes();
+    const store = useNavigationStore();
     const items = routes
       .filter((r) => r.meta?.nav?.caption)
       .map((r) => {
@@ -123,9 +125,10 @@ export default defineComponent({
         };
       });
 
-    const showMenu = ref(false);
     return {
-      showMenu,
+      showMenu: computed(() => store.state.hamburgerMenuVisible),
+      toggleMenu: () => store.toggleHamburgerMenu(),
+      hideMenu: () => store.hideHamburgerMenu(),
       items,
     };
   },

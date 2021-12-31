@@ -1,30 +1,23 @@
-import { App } from '@vue/runtime-core';
-import { createSimpleStoreKey, SimpleStore } from '@/store/simple-store';
-import { inject } from 'vue';
+import { SimpleStore, useStoreFactory } from '@/store/simple-store';
 
 type ProjectsState = {
   projects: string[];
 };
 
 class ProjectStore extends SimpleStore<ProjectsState> {
-  protected data(): ProjectsState {
+  protected setup(): ProjectsState {
     return {
       projects: ['Eins', 'Zwei'],
     };
   }
 
   addProject(project: string) {
-    this.internalState.projects.push(project);
+    this._state.projects.push(project);
   }
 }
 
-const ProjectStoreKey = createSimpleStoreKey<ProjectStore>('ProjectsVuexKey');
-
-export function createProjectsStore(app: App) {
-  const store = new ProjectStore();
-  app.provide(ProjectStoreKey, store);
-}
+const defaultKey = 'Projects';
 
 export function useProjectsStore(): ProjectStore {
-  return inject(ProjectStoreKey) as ProjectStore;
+  return useStoreFactory(defaultKey, () => new ProjectStore());
 }
