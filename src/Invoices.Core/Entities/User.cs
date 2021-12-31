@@ -7,7 +7,7 @@ namespace Invoices.Core.Entities
     {
         public UserId Id { get; }
 
-        public PersonName Name { get; private set; }
+        public PersonName Name { get;  set; }
 
         public DateTime CreatedAt { get; private set; }
         public DateTime ChangedAt { get; private set; }
