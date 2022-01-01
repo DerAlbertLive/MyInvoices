@@ -2,9 +2,7 @@ import { MountingOptions, shallowMount } from '@vue/test-utils';
 import { defineComponent, h } from 'vue';
 
 export function mountCompositionWithWrapper<TComposition>(factory: () => TComposition) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  let composition: TComposition = null;
+  let composition: TComposition | undefined;
 
   const component = defineComponent({
     setup() {
@@ -20,7 +18,7 @@ export function mountCompositionWithWrapper<TComposition>(factory: () => TCompos
 
   const wrapper = shallowMount(component, mountOptions);
 
-  if (composition === null) {
+  if (!composition) {
     throw Error('no composition could be created');
   }
   return {

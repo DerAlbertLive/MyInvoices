@@ -5,7 +5,7 @@
         class="float-right flex items-center px-3 py-2 border rounded text-green-200 border-green-400 hover:text-white hover:border-white"
         @click="toggleMenu"
       >
-        <MenuItem class="fill-slate-300" />
+        <MenuIcon class="fill-slate-300" />
       </button>
     </div>
     <div
@@ -32,49 +32,27 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useNavigationStore } from '../../store/navigation-store';
+import { MenuIcon } from '@heroicons/vue/outline';
 import { MenuItem } from './Menu';
 
-interface Props {
-  items?: Array<MenuItem>;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  items: (): [] => [],
+withDefaults(defineProps<{
+  items?: Array<MenuItem>
+}>(), {
+  items: () => [],
 });
+
 
 const store = useNavigationStore();
 
 const showMenu = computed(() => store.state.hamburgerMenuVisible);
 const toggleMenu = () => store.toggleHamburgerMenu();
+
+const hideMenu = () => store.hideHamburgerMenu();
+
 </script>
 <style lang="scss" scoped>
-@tailwind components;
-header::after {
-  content: '';
-  @apply table clear-both;
-}
+@import "../../assets/css/site.scss";
 
-.bg-inherit {
-  background-color: inherit;
-}
-
-@layer components {
-  .border-nav-active {
-    @apply border-rose-100;
-  }
-
-  .border-nav-hover {
-    @apply border-rose-200;
-  }
-
-  .header-background {
-    @apply bg-rose-800;
-  }
-
-  .header-text {
-    @apply text-slate-200;
-  }
-}
 
 .mobile-nav {
   li {
@@ -89,6 +67,17 @@ header::after {
       @apply top-2/4 h-0;
       @apply opacity-0;
       transition: height ease-in-out 200ms, top ease-in-out 200ms, opacity ease-in-out 250ms;
+    }
+
+    &:hover::before,
+    &.active::before {
+      @apply opacity-100;
+      @apply h-full top-0;
+    }
+
+    &.active:before {
+      @apply opacity-100;
+      @apply border-nav-active;
     }
   }
 }

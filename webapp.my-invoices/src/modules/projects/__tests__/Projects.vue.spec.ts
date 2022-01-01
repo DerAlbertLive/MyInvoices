@@ -17,7 +17,7 @@ describe('projects', () => {
 
     await fireEvent.click(button);
 
-    const result = getAllByRole('list-item');
+    const result = getAllByRole('listitem');
 
     expect(result.length).toBe(3);
     expect(result[2].textContent).toBe('Hello');
