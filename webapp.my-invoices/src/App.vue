@@ -9,6 +9,7 @@
         <Sidebar class="tex" />
       </div>
       <div class="w-4/5 lg:w-5/6 p-1">
+        <Breadcrump />
         <router-view />
       </div>
     </div>
@@ -16,17 +17,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import NavHeader from './components/page/NavHeader.vue';
 import Sidebar from './components/page/Sidebar.vue';
 import Debug from './components/page/DebugLayout.vue';
-import { defineComponent } from 'vue';
+import Breadcrump from '@/components/Breadcrump.vue';
 
-export default defineComponent({
-  components: {
-    NavHeader,
-    Sidebar,
-    Debug,
-  },
-});
 </script>

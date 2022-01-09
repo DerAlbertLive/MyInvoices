@@ -10,14 +10,14 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="hidden sm:block h-full flex items-center">
+  <div class="hidden sm:block h-full items-center">
     <ul class="top-nav h-full">
       <li
         v-for="item in items"
         :key="item.route"
         class="flex items-center pt-2"
       >
-        <router-link :to="{ name: item.route }">
+        <router-link :to="{ name: item.route, params: {} }">
           {{ item.caption }}
         </router-link>
       </li>

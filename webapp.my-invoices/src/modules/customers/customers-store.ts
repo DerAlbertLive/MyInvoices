@@ -40,7 +40,7 @@ class CustomersStore extends SimpleStore<CustomersState> {
         zipCode: '3247',
       },
       {
-        id: '123',
+        id: '125',
         number: '20014',
         name: 'Kunde 3',
         street: 'Woo wie 19',

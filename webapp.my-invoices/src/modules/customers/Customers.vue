@@ -2,7 +2,7 @@
   <div>
     <h2>Customer</h2>
   </div>
-  <table>
+  <table class="selection">
     <thead>
       <tr>
         <th>Number</th>
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="customer in customers" :key="customer.id">
+      <tr v-for="customer in customers" :key="customer.id" class="clickable" @click="onCustomerClick(customer)">
         <td>{{ customer.number }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.street }}</td>
@@ -25,12 +25,19 @@
 <script lang="ts" setup>
 import { computed, onBeforeMount } from 'vue';
 import { useCustomersStore } from './customers-store';
+import { useRouter } from 'vue-router';
 
 const store = useCustomersStore();
+
+const router = useRouter();
 
 onBeforeMount(async () => {
   await store.loadCustomers();
 });
+
+const onCustomerClick = (customer: Customer) => {
+  router.push({name: 'customerDetails', params: { id: customer.id }});
+}
 
 const customers = computed(() =>
   store.state.customers.map((c) => {
@@ -40,6 +47,7 @@ const customers = computed(() =>
       number: c.number,
       street: c.street,
       city: `${c.zipCode} ${c.city}`,
+      onCustomerClick
     };
   }),
 );

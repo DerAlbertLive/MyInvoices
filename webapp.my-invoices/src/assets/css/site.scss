@@ -34,3 +34,18 @@
     @apply text-slate-200;
   }
 }
+
+
+table.selection {
+  tbody {
+    tr {
+      &:hover {
+        background-color: var(--topnav-color-hover);
+
+      }
+      &.clickable {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -6,18 +6,22 @@ import { useNavigationStore } from '../../store/navigation-store';
 import DesktopMenu from './DesktopMenu.vue';
 import MobileMenu from './MobileMenu.vue';
 import { MenuItem } from './Menu';
+import { computed } from 'vue';
 
 const router = useRouter();
-const routes = router.getRoutes();
 const store = useNavigationStore();
-const items = routes
-  .filter((r) => r.meta?.nav?.caption)
-  .map<MenuItem>((r) => {
-    return {
-      route: r.name as string ?? 'Missing Route Name',
-      caption: r.meta.nav?.caption ?? 'Missing Caption',
-    };
-  });
+const items = computed(() => {
+  console.log(router.currentRoute.value);
+  const routes = router.getRoutes();
+  return routes
+    .filter((r) => r.meta?.nav?.caption)
+    .map<MenuItem>((r) => {
+      return {
+        route: (r.name as string) ?? 'Missing Route Name',
+        caption: r.meta.nav?.caption ?? 'Missing Caption',
+      };
+    });
+});
 
 onBeforeRouteLeave(() => {
   hideMenu();
@@ -38,7 +42,7 @@ const hideMenu = () => store.hideHamburgerMenu();
   </header>
 </template>
 <style lang="scss" scoped>
-@import "../../assets/css/site.scss";
+@import '../../assets/css/site.scss';
 
 header::after {
   content: '';
@@ -49,5 +53,4 @@ header {
   @apply header-text;
   @apply header-background;
 }
-
 </style>
