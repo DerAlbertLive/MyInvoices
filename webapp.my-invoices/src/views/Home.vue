@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="prose">
-      <h1>Welcome to Invoices,</h1>
+      <h1>Welcome to Invoics,</h1>
       <h2>the time recording and invoice management.</h2>
     </div>
     <div class="bg-black text-white md:text-yellow-500">Test</div>

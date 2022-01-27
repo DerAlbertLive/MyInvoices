@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest'
+
 import { fireEvent, render } from '@testing-library/vue';
 
 import Projects from '../Projects.vue';
@@ -11,7 +13,7 @@ describe('projects', () => {
     });
 
     const input = getByRole('textbox') as HTMLInputElement;
-    const button = getByRole('button');
+    const button = getByRole('button') as HTMLButtonElement;
 
     await fireEvent.update(input, 'Hello');
 

@@ -1,3 +1,5 @@
+import { expect, describe, it } from 'vitest'
+
 import { mountComposition, mountCompositionWithWrapper } from '../../src/useHelper';
 import { onMounted, onUnmounted, ref } from 'vue';
 
