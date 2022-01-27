@@ -1,4 +1,4 @@
-import { SimpleStore, storeFactory } from '@/store/simple-store';
+import { SimpleStore, storeFactory } from '../../store/simple-store';
 
 type ProjectsState = {
   projects: string[];

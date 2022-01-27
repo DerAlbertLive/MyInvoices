@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
-import { routes as CustomerRoutes } from '@/modules/customers';
-import ProjectRoutes from '@/modules/projects/projects-routes';
-import InvoicesRoutes from '@/modules/invoices/invoices-routes';
-import TimeKeepingRoutes from '@/modules/timeKeeping/time-keeping-routes';
+import { routes as CustomerRoutes } from '../modules/customers';
+import ProjectRoutes from '../modules/projects/projects-routes';
+import InvoicesRoutes from '../modules/invoices/invoices-routes';
+import TimeKeepingRoutes from '../modules/timeKeeping/time-keeping-routes';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
     meta: {
       nav: {
         caption: 'Home',
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/About.vue'),
+    component: () => import(/* webpackChunkName: "home" */ '../views/About.vue'),
     meta: {
       nav: {
         caption: 'About',
@@ -41,7 +41,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory('/'),
   linkActiveClass: 'active',
   linkExactActiveClass: 'active-exact',
   routes,

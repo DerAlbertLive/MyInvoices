@@ -1,4 +1,4 @@
-import { mountComposition, mountCompositionWithWrapper } from '@/useHelper';
+import { mountComposition, mountCompositionWithWrapper } from '../../src/useHelper';
 import { onMounted, onUnmounted, ref } from 'vue';
 
 function useTestComposition(text: string, lifeCycle: boolean) {

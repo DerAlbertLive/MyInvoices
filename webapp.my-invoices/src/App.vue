@@ -9,7 +9,7 @@
         <Sidebar class="tex" />
       </div>
       <div class="w-4/5 lg:w-5/6 p-1">
-        <Breadcrump />
+        <BreadCrump />
         <router-view />
       </div>
     </div>
@@ -21,6 +21,6 @@
 import NavHeader from './components/page/NavHeader.vue';
 import Sidebar from './components/page/Sidebar.vue';
 import Debug from './components/page/DebugLayout.vue';
-import Breadcrump from '@/components/Breadcrump.vue';
+import BreadCrump from './components/BreadCrump.vue';
 
 </script>

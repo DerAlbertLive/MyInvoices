@@ -13,7 +13,7 @@
     </ul>
     <label class="block">
       Project2:
-      <input v-model="newProject" type="text">
+      <input v-model="newProject" role="textbox" type="text">
     </label>
     <button
       type="button"
